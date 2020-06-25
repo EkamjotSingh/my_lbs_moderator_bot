@@ -49,8 +49,7 @@ I can help you in every way possible!''' ,
         embed.set_thumbnail(url = "https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png")
         embed.set_footer(icon_url= "https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png", text = "Made by Ekamjot#9133")
         await message.channel.send(embed=embed)
-
-    elif message.content.find("What is the prefix") != -1:
+            elif message.content.find("What is the prefix") != -1:
         await message.channel.send("The prefix for this bot is -")
 
 
@@ -83,7 +82,7 @@ I can help you in every way possible!''' ,
         embed.set_thumbnail(
             url="https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png")
         await message.channel.send(embed=embed)
-
+        
 @client.event
 async def on_member_join(member):
     embed = discord.Embed(
@@ -98,18 +97,4 @@ async def on_member_join(member):
 
     await channel.send(embed=embed)
     
-@client.event
-async def on_member_join(member):
-    embed = discord.Embed(
-        title = "Welcome!",
-        description= f"**{member.name}** just joined! It is nice to have you here! :slight_smile: Please abide by the rules here and ENJOY! :wink:" ,
-        color = discord.Color.blue()
-)
-    embed.set_thumbnail(url = f"{member.avatar_url}")
-    embed.set_author(icon_url= "https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png" , name = "LBS Trivia")
-    embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png" , text="Made by Ekamjot#9133")
-    channel = client.get_channel(id = 724157354106421288)
-
-    await channel.send(embed=embed)
-    
-    client.run('NzI0MTU4MjIzNDAxMDkxMTUz.XvDeTw.09x0ea906dwMdXJfc9t25bnZqxk')
+client.run('NzI0MTU4MjIzNDAxMDkxMTUz.XvDeTw.09x0ea906dwMdXJfc9t25bnZqxk')
