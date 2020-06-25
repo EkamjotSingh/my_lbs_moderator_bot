@@ -49,7 +49,7 @@ I can help you in every way possible!''' ,
         embed.set_thumbnail(url = "https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png")
         embed.set_footer(icon_url= "https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png", text = "Made by Ekamjot#9133")
         await message.channel.send(embed=embed)
-            elif message.content.find("What is the prefix") != -1:
+    elif message.content.find("What is the prefix") != -1:
         await message.channel.send("The prefix for this bot is -")
 
 
