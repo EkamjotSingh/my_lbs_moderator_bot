@@ -84,6 +84,11 @@ I can help you in every way possible!''' ,
         await message.channel.send(embed=embed)
         
 @client.event
+async def on_message(message):
+    if str(message.channel) == "winning-ss" and message.content != "":
+        await message.channel.purge(limit = 1)
+        
+@client.event
 async def on_member_join(member):
     embed = discord.Embed(
         title = "Welcome!",
