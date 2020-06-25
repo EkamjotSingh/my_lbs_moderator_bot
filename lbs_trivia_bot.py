@@ -98,7 +98,7 @@ async def on_member_join(member):
 
     await channel.send(embed=embed)
     
-    @client.event
+@client.event
 async def on_member_join(member):
     embed = discord.Embed(
         title = "Welcome!",
