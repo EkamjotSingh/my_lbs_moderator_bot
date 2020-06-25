@@ -12,7 +12,7 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    id = client.get_guild(724157353632727087)
+    
 
     if message.content.find("-info") != -1:
         embed = discord.Embed(
@@ -26,16 +26,7 @@ I can help you in every way possible!''' ,
         embed.set_thumbnail(url = "https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png")
         embed.set_footer(icon_url= "https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png" , text= "Made by Ekamjot#9133")
         await message.channel.send(embed=embed)
-    elif message.content.find("-members") != -1:
-        embed = discord.Embed(
-            title = "**Total number of members in this server:-**" ,
-            description= f"{id.member_count}" ,
-            color = discord.Color.blue()
-        )
-        embed.set_footer(icon_url= "https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png" , text= "Made by Ekamjot#9133")
-        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png")
-        await message.channel.send(embed=embed)
-
+   
     elif message.content.startswith("-help"):
         embed = discord.Embed(
         title = "**Help Commands!**" ,
@@ -45,7 +36,6 @@ I can help you in every way possible!''' ,
 
         embed.add_field(name="**-info**" , value="To know about the bot" , inline=False)
         embed.add_field(name="**-botstatus**" , value="To check the bot status" , inline=False)
-        embed.add_field(name="**-members**", value="To know about the number of members in the server", inline=False)
         embed.add_field(name="**-invite**" , value = "To invite me to your server" , inline=False)
         embed.set_thumbnail(url = "https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png")
         embed.set_footer(icon_url= "https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png", text = "Made by Ekamjot#9133")
