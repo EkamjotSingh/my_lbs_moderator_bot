@@ -1,4 +1,4 @@
-git+https://gifthub.com/Rapptz/discord.py
+git+https://gifthub.com/EkamjotSingh/discord.py
 PyNaCl==1.3.0
 aiohttp==1.1.0
 pandas
