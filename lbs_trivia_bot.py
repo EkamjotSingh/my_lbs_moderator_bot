@@ -93,7 +93,7 @@ async def on_member_join(member):
     embed.set_thumbnail(url = f"{member.avatar_url}")
     embed.set_author(icon_url= "https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png" , name = "LBS Trivia")
     embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png" , text="Made by Ekamjot#9133")
-    channel = client.get_channel(id = 724157354106421288)
+    channel = client.get_channel(id = 725731686733709393)
 
     await channel.send(embed=embed)
     
