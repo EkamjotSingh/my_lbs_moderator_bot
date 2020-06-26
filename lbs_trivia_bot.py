@@ -44,7 +44,7 @@ I can help you in every way possible!''' ,
 
         embed.add_field(name="**-info**" , value="To know about the bot" , inline=False)
         embed.add_field(name="**-botstatus**" , value="To check the bot status" , inline=False)
-        embed.add_field(name="**-members**", value="To know about the number of members in the server", inline=False)
+        embed.add_field(name="-members** (currently being fixed)**", value="To know about the number of members in the server", inline=False)
         embed.add_field(name="**-invite**" , value = "To invite me to your server" , inline=False)
         embed.set_thumbnail(url = "https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png")
         embed.set_footer(icon_url= "https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png", text = "Made by Ekamjot#9133")
