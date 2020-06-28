@@ -16,18 +16,18 @@ client = commands.Bot(command_prefix="-")
 async def kick(ctx , member : discord.Member , * , reason=None):
         await member.kick(reason=reason)
         if reason==None:
-            await ctx.send(f"**{member.display_name}** has been kicked (reason=**No reason given!**)")
+            await ctx.send(f"**{member.display_name}** has been kicked by **{ctx.author}**!(reason=**No reason given!**)")
         else:
-            await ctx.send(f"**{member.display_name}** has been kicked (reason=**{reason}**)")
+            await ctx.send(f"**{member.display_name}** has been kicked by **{ctx.author}**!(reason=**{reason}**)")
 
 @client.command()
 @has_permissions(ban_members=True)
 async def ban(ctx , member : discord.Member ,*, reason=None):
     await member.ban(reason=reason)
     if reason==None:
-        await ctx.send(f"**{member.display_name}** has been banned! (reason=**No reason given!**)")
+        await ctx.send(f"**{member.display_name}** has been banned by **{ctx.author}**! (reason=**No reason given!**)")
     else:
-        await ctx.send(f"**{member.display_name}** was banned! (reason=**{reason}**)")
+        await ctx.send(f"**{member.display_name}** was banned by **{ctx.author}**! (reason=**{reason}**)")
 
 @client.command()
 @has_permissions(ban_members=True)
@@ -72,12 +72,15 @@ async def help(ctx):
 
     embed.add_field(name="**-info**", value="To know about the bot", inline=False)
     embed.add_field(name="**-avatar [member]**", value="To check avatar of other members", inline=False)
+    embed.add_field(name="**-users**" , value="To know about the number of members in the server", inline=False)
     embed.add_field(name="**-botstatus**", value="To check the bot status", inline=False)
     embed.add_field(name="**-kick [member]**", value="To kick a person out of the server!(**Can be only used by the person who has ``Kick Members`` permission!**)", inline=False)
     embed.add_field(name="**-ban [member]**", value="To ban a person!(**Can be only used by the person who has ``Ban Members`` permission!**)" , inline=False)
     embed.add_field(name="**-unban [member#1234]**", value="To unban a person!(**Can be only used by the person who has ``Ban Members`` permission!**)" , inline=False)
-    embed.add_field(name="**-users**",
-                    value="To know about the number of members in the server", inline=False)
+    embed.add_field(name="**-role [member] [role]**", value="To give a role to a person!(**Can be only used by the person who has ``Manage Roles`` permission!**)" , inline=False)
+    embed.add_field(name="**-removerole [member] [role]**",value="To remove a role from a person!(**Can be only used by the person who has ``Manage Roles`` permission!**)",inline=False)
+    embed.add_field(name="**-report [issue]**", value="To report a issue!", inline=False)
+    embed.add_field(name="**-suggest [suggestion]**", value="To suggest something!", inline=False)
     embed.add_field(name="**-invite**", value="To invite me to your server", inline=False)
     embed.set_thumbnail(
         url="https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png")
@@ -89,6 +92,18 @@ async def help(ctx):
 @client.command()
 async def ready(ctx):
     await ctx.send("> **LBS Trivia Bot is connected successfully!** :white_check_mark:")
+
+@client.command()
+async def report(ctx , message):
+    myself = client.get_user(457044079994470402)
+    await myself.send(f"Complaint :- {message}")
+    await ctx.send("Your complaint has been registered successfully! We will fix this as soon as possible!")
+
+@client.command()
+async def suggest(ctx , message):
+    myself = client.get_user(457044079994470402)
+    await myself.send(f"Suggestion :- {message}")
+    await ctx.send("Thank you for your suggestion! I have escalated your suggestion to the developer!:smile: If he finds your suggestion useful he will surely implement it! :wink:")
 
 @client.command()
 async def invite(ctx):
@@ -105,7 +120,7 @@ async def invite(ctx):
     embed.set_thumbnail(
             url="https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png")
     await ctx.send(embed=embed)
-    
+
 @client.command()
 async def botstatus(ctx):
     embed = discord.Embed(
@@ -148,6 +163,38 @@ async def avatar(ctx , member: discord.Member):
     embed.set_image(url=f"{member.avatar_url}")
     await ctx.send(embed=embed)
 
+@client.command()
+@has_permissions(manage_roles=True)
+async def role(ctx , member: discord.Member ,*, role: discord.Role):
+    await member.add_roles(role)
+    embed = discord.Embed(
+        title="LBS Trivia" ,
+        description=f":white_check_mark: **Changed roles for {member}** , ``+{role}`` (role to **{member}** was given by **{ctx.author})**" ,
+        color = discord.Color.blue()
+    )
+    embed.set_footer(
+        icon_url="https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png",
+        text="Made by Ekamjot#9133")
+    await ctx.send(embed=embed)
+
+@client.command()
+@has_permissions(manage_roles=True)
+async def removerole(ctx , member: discord.Member ,*, role: discord.Role):
+    await member.remove_roles(role)
+    embed = discord.Embed(
+        title="LBS Trivia",
+        description=f":white_check_mark: **Removed roles for {member}** , ``-{role}`` (``{role}`` role of the user **{member}** was removed by **{ctx.author})**",
+        color=discord.Color.blue()
+    )
+    embed.set_footer(
+        icon_url="https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png",
+        text="Made by Ekamjot#9133")
+    await ctx.send(embed=embed)
+
+@client.command()
+async def ping(ctx):
+    await ctx.send(f"Pong! ({client.latency}ms)")
+
 @client.event
 async def on_member_join(member):
     embed = discord.Embed(
@@ -164,5 +211,17 @@ async def on_member_join(member):
         text="Made by Ekamjot#9133")
     channel = client.get_channel(id=724157354106421288)
     await channel.send(embed=embed)
+
+
+
+
+
+
+
+
+
+
+
+
 
 client.run('NzI0MTU4MjIzNDAxMDkxMTUz.XvDeTw.09x0ea906dwMdXJfc9t25bnZqxk')
