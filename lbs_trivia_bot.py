@@ -94,13 +94,13 @@ async def ready(ctx):
     await ctx.send("> **LBS Trivia Bot is connected successfully!** :white_check_mark:")
 
 @client.command()
-async def report(ctx , message):
+async def report(ctx ,*, message):
     myself = client.get_user(457044079994470402)
     await myself.send(f"Complaint :- {message}")
     await ctx.send("Your complaint has been registered successfully! We will fix this as soon as possible!")
 
 @client.command()
-async def suggest(ctx , message):
+async def suggest(ctx ,*, message):
     myself = client.get_user(457044079994470402)
     await myself.send(f"Suggestion :- {message}")
     await ctx.send("Thank you for your suggestion! I have escalated your suggestion to the developer!:smile: If he finds your suggestion useful he will surely implement it! :wink:")
