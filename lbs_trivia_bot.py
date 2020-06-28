@@ -149,7 +149,7 @@ async def users(ctx):
     await ctx.send(embed=embed)
 
 @client.command()
-async def avatar(ctx , member: discord.Member):
+async def avatar(ctx ,*, member: discord.Member):
     embed = discord.Embed(
         title = "LBS Trivia" ,
         description= f" Showing {member.mention}'s avatar!" ,
