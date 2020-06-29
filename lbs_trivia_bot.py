@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+import asyncio
 from discord.ext.commands import has_permissions
 from discord import member
 from discord.ext.commands import Bot
@@ -19,6 +20,8 @@ async def kick(ctx , member : discord.Member , * , reason=None):
             await ctx.send(f"**{member.display_name}** has been kicked by **{ctx.author}**!(reason=**No reason given!**)")
         else:
             await ctx.send(f"**{member.display_name}** has been kicked by **{ctx.author}**!(reason=**{reason}**)")
+
+
 
 @client.command()
 @has_permissions(ban_members=True)
@@ -74,11 +77,14 @@ async def help(ctx):
     embed.add_field(name="**-avatar [member]**", value="To check avatar of other members", inline=False)
     embed.add_field(name="**-users**" , value="To know about the number of members in the server", inline=False)
     embed.add_field(name="**-botstatus**", value="To check the bot status", inline=False)
+    embed.add_field(name="**-setnick [member] [nickname]**",value="To change the nickname of a person!(**Can be only used by the person who has ``Manage Nicknames`` permission!**)", inline=False)
     embed.add_field(name="**-kick [member]**", value="To kick a person out of the server!(**Can be only used by the person who has ``Kick Members`` permission!**)", inline=False)
     embed.add_field(name="**-ban [member]**", value="To ban a person!(**Can be only used by the person who has ``Ban Members`` permission!**)" , inline=False)
     embed.add_field(name="**-unban [member#1234]**", value="To unban a person!(**Can be only used by the person who has ``Ban Members`` permission!**)" , inline=False)
     embed.add_field(name="**-role [member] [role]**", value="To give a role to a person!(**Can be only used by the person who has ``Manage Roles`` permission!**)" , inline=False)
     embed.add_field(name="**-removerole [member] [role]**",value="To remove a role from a person!(**Can be only used by the person who has ``Manage Roles`` permission!**)",inline=False)
+    embed.add_field(name="**-purge [number of messages]**",value="To delete a number of messages!(**Can be only used by the person who has ``Manage Messages`` permission!**)",inline=False)
+    embed.add_field(name="**-warn [member] [reason]**",value="To warn a person!(**Can be only used by the person who has ``Ban Members`` permission!**)",inline=False)
     embed.add_field(name="**-report [issue]**", value="To report a issue!", inline=False)
     embed.add_field(name="**-suggest [suggestion]**", value="To suggest something!", inline=False)
     embed.add_field(name="**-invite**", value="To invite me to your server", inline=False)
@@ -94,16 +100,36 @@ async def ready(ctx):
     await ctx.send("> **LBS Trivia Bot is connected successfully!** :white_check_mark:")
 
 @client.command()
+@has_permissions(ban_members=True , kick_members=True)
+async def warn(ctx , member: discord.Member ,*, reason):
+    user = client.get_user(member.id)
+    server = ctx.guild.name
+    await user.send(f"You were warned in **{server}** server for: **{reason}**")
+    await ctx.send(f"**{member}** was warned! (reason=**{reason}**!)")
+
+
+
+@client.command()
 async def report(ctx ,*, message):
     myself = client.get_user(457044079994470402)
     await myself.send(f"Complaint :- {message}")
     await ctx.send("Your complaint has been registered successfully! We will fix this as soon as possible!")
+
+@report.error
+async def report_error(ctx , error):
+    if isinstance(error , commands.MissingRequiredArgument):
+        await ctx.send(f"**{ctx.author.mention}** please write the complaint too!")
 
 @client.command()
 async def suggest(ctx ,*, message):
     myself = client.get_user(457044079994470402)
     await myself.send(f"Suggestion :- {message}")
     await ctx.send("Thank you for your suggestion! I have escalated your suggestion to the developer!:smile: If he finds your suggestion useful he will surely implement it! :wink:")
+
+@suggest.error
+async def suggest_error(ctx , error):
+    if isinstance(error , commands.MissingRequiredArgument):
+        await ctx.send(f"**{ctx.author.mention}** please write the suggestion too!")
 
 @client.command()
 async def invite(ctx):
@@ -120,6 +146,17 @@ async def invite(ctx):
     embed.set_thumbnail(
             url="https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png")
     await ctx.send(embed=embed)
+
+@client.command()
+@has_permissions(manage_nicknames=True)
+async def setnick(ctx , member: discord.Member ,*, nick):
+    await member.edit(nick=nick)
+    await ctx.send("Nickname Changed!")
+
+@setnick.error
+async def setnick_error(ctx , error):
+    if isinstance(error , commands.MissingPermissions):
+        await ctx.send(f"**{ctx.author.mention}** you need ``Manage Nicknames`` permission!")
 
 @client.command()
 async def botstatus(ctx):
@@ -149,7 +186,7 @@ async def users(ctx):
     await ctx.send(embed=embed)
 
 @client.command()
-async def avatar(ctx ,*, member: discord.Member):
+async def avatar(ctx , member: discord.Member):
     embed = discord.Embed(
         title = "LBS Trivia" ,
         description= f" Showing {member.mention}'s avatar!" ,
@@ -177,6 +214,13 @@ async def role(ctx , member: discord.Member ,*, role: discord.Role):
         text="Made by Ekamjot#9133")
     await ctx.send(embed=embed)
 
+@role.error
+async def role_error(ctx , error):
+    if isinstance(error , commands.MissingPermissions):
+        await ctx.send(f"**{ctx.author.mention}** you need ``Manage Roles`` permission for this command!")
+
+
+
 @client.command()
 @has_permissions(manage_roles=True)
 async def removerole(ctx , member: discord.Member ,*, role: discord.Role):
@@ -190,6 +234,23 @@ async def removerole(ctx , member: discord.Member ,*, role: discord.Role):
         icon_url="https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png",
         text="Made by Ekamjot#9133")
     await ctx.send(embed=embed)
+
+@removerole.error
+async def removerole_error(ctx , error):
+    if isinstance(error , commands.MissingPermissions):
+        await ctx.send(f"**{ctx.author.mention}** you need ``Manage Roles`` permission for this command!")
+
+@client.command()
+@has_permissions(manage_messages=True)
+async def purge(ctx):
+    llmit = ctx.message.content[6:]
+    await ctx.channel.purge(limit=int(llmit) + 1)
+
+
+@purge.error
+async def purge_error(ctx , error):
+    if isinstance(error , commands.MissingPermissions):
+        await ctx.send(f"**{ctx.author.mention}** you need ``Manage Messages`` permission for this command!")
 
 @client.command()
 async def ping(ctx):
