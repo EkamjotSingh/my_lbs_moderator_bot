@@ -17,9 +17,16 @@ client = commands.Bot(command_prefix="-")
 async def kick(ctx , member : discord.Member , * , reason=None):
         await member.kick(reason=reason)
         if reason==None:
-            await ctx.send(f"**{member.display_name}** has been kicked by **{ctx.author}**!(reason=**No reason given!**)")
+            embed = discord.Embed(title="ModCamp" , description=f"**{member.display_name}** has been kicked by **{ctx.author}**!(reason=**No reason given!**)"  , color = discord.Color.blue())
+            embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png" , text="Made by Ekamjot#9133")
+            embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
+            await ctx.send(embed=embed)
         else:
-            await ctx.send(f"**{member.display_name}** has been kicked by **{ctx.author}**!(reason=**{reason}**)")
+            embed = discord.Embed(title="ModCamp",description=f"**{member.display_name}** has been kicked by **{ctx.author}**!(reason=**{reason}**)",color=discord.Color.blue())
+            embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",text="Made by Ekamjot#9133")
+            embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
+            await ctx.send(embed=embed)
+
 
 
 
@@ -28,9 +35,16 @@ async def kick(ctx , member : discord.Member , * , reason=None):
 async def ban(ctx , member : discord.Member ,*, reason=None):
     await member.ban(reason=reason)
     if reason==None:
-        await ctx.send(f"**{member.display_name}** has been banned by **{ctx.author}**! (reason=**No reason given!**)")
+        embed = discord.Embed(title="ModCamp",description=f"**{member.display_name}** has been banned by **{ctx.author}**! (reason=**No reason given!**",color=discord.Color.blue())
+        embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",text="Made by Ekamjot#9133")
+        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
+        await ctx.send(embed=embed)
     else:
-        await ctx.send(f"**{member.display_name}** was banned by **{ctx.author}**! (reason=**{reason}**)")
+        embed = discord.Embed(title="ModCamp",description=f"**{member.display_name}** was banned by **{ctx.author}**! (reason=**{reason}**)",color=discord.Color.blue())
+        embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",text="Made by Ekamjot#9133")
+        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
+        await ctx.send(embed=embed)
+
 
 @client.command()
 @has_permissions(ban_members=True)
@@ -55,14 +69,29 @@ async def on_ready():
 async def info(ctx):
     embed = discord.Embed(
             title="**Information about me**",
-            description='''I was developed by Ekamjot!
-I moderate this server!
-I am a bot!
-I can help you in every way possible!''',
+            description='''      ---ModCamp---
+Feeling it difficult to configure moderation bots? :thinking: 
+**No worries I am here to help you!**:slight_smile:
+
+In me there are a number of commands to keep your server free from spammers!
+
+You can give role to any person , you can even kick or ban a user with my help!
+My prefix is **-**
+
+I'll help you in moderating your server!
+
+To assign roles always keep the bot role on top of the role you want to assign!!
+
+To know my commands and for more information type ``-help`` 
+
+To invite me to your server type ``-invite``
+
+If you face any problem you can DM Ekamjot#9133
+Thanks :slight_smile:''',
             colour=discord.Colour.blue()
         )
-    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png")
-    embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png", text="Made by Ekamjot#9133")
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
+    embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png", text="Made by Ekamjot#9133")
     await ctx.send(embed=embed)
 
 @client.command()
@@ -89,9 +118,9 @@ async def help(ctx):
     embed.add_field(name="**-suggest [suggestion]**", value="To suggest something!", inline=False)
     embed.add_field(name="**-invite**", value="To invite me to your server", inline=False)
     embed.set_thumbnail(
-        url="https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png")
+        url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
     embed.set_footer(
-        icon_url="https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png",
+        icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",
         text="Made by Ekamjot#9133")
     await ctx.send(embed=embed)
 
@@ -104,8 +133,15 @@ async def ready(ctx):
 async def warn(ctx , member: discord.Member ,*, reason):
     user = client.get_user(member.id)
     server = ctx.guild.name
+    embed = discord.Embed(
+        title="**ModCamp**",
+        description=f"**{member}** was warned! (reason=**{reason}**!)",
+        colour=discord.Colour.blue()
+    )
+    embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png" , text="Made by Ekamjot#9133")
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
     await user.send(f"You were warned in **{server}** server for: **{reason}**")
-    await ctx.send(f"**{member}** was warned! (reason=**{reason}**!)")
+    await ctx.send(embed=embed)
 
 
 
@@ -134,24 +170,31 @@ async def suggest_error(ctx , error):
 @client.command()
 async def invite(ctx):
     embed = discord.Embed(
-        title="**LBS Trivia**",
+        title="**ModCamp**",
         color=discord.Color.blue()
         )
     embed.add_field(name="**Invite Link**:",
                         value="[Click Here](https://discord.com/api/oauth2/authorize?client_id=724158223401091153&permissions=8&scope=bot)",
                         inline=False)
     embed.set_footer(
-            icon_url="https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png",
+            icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",
             text="Made by Ekamjot#9133")
     embed.set_thumbnail(
-            url="https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png")
+            url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
     await ctx.send(embed=embed)
 
 @client.command()
 @has_permissions(manage_nicknames=True)
 async def setnick(ctx , member: discord.Member ,*, nick):
     await member.edit(nick=nick)
-    await ctx.send("Nickname Changed!")
+    embed = discord.Embed(
+        title="**ModCamp**",
+        description=":white_check_mark: **Nickname Changed!**",
+        color=discord.Color.blue()
+    )
+    embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png", text = "Made by Ekamjot#9133")
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
+    await ctx.send(embed=embed)
 
 @setnick.error
 async def setnick_error(ctx , error):
