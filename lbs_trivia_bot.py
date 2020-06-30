@@ -309,7 +309,7 @@ async def purge_error(ctx , error):
 
 @client.command()
 async def ping(ctx):
-    await ctx.send(f"Pong! ({client.latency}ms)")
+    await ctx.send(f"Pong! ({round(client.latency*1000)}ms)")
 
 @client.event
 async def on_member_join(member):
