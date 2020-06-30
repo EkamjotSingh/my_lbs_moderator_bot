@@ -185,6 +185,12 @@ async def users(ctx):
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png")
     await ctx.send(embed=embed)
 
+@users.error
+async def users_error(ctx , error):
+    if isinstance(error , commands.CommandInvokeError):
+        await ctx.send(f"**{ctx.author.mention}** you can use this command only in a server!")
+
+
 @client.command()
 async def avatar(ctx , member: discord.Member):
     embed = discord.Embed(
@@ -199,6 +205,12 @@ async def avatar(ctx , member: discord.Member):
 
     embed.set_image(url=f"{member.avatar_url}")
     await ctx.send(embed=embed)
+
+@avatar.error
+async def avatar_error(ctx , error):
+    if isinstance(error , commands.MissingRequiredArgument):
+        await ctx.send(f"**{ctx.author.mention}** please mention a member too!")
+
 
 @client.command()
 @has_permissions(manage_roles=True)
@@ -272,6 +284,7 @@ async def on_member_join(member):
         text="Made by Ekamjot#9133")
     channel = client.get_channel(id=724157354106421288)
     await channel.send(embed=embed)
+
 
 
 
