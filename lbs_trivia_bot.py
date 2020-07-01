@@ -1,11 +1,12 @@
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
 import asyncio
 from discord.ext.commands import has_permissions
 from discord import member
 from discord.ext.commands import Bot
 import random
 from discord import Message
+from itertools import cycle
 
 client = commands.Bot(command_prefix="-")
 
@@ -20,11 +21,13 @@ async def kick(ctx , member : discord.Member , * , reason=None):
             embed = discord.Embed(title="ModCamp" , description=f"**{member.display_name}** has been kicked by **{ctx.author}**!(reason=**No reason given!**)"  , color = discord.Color.blue())
             embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png" , text="Made by Ekamjot#9133")
             embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
+            embed.set_image(url="https://cdn.discordapp.com/attachments/724157354106421288/727859761739071518/tenor-3.gif")
             await ctx.send(embed=embed)
         else:
             embed = discord.Embed(title="ModCamp",description=f"**{member.display_name}** has been kicked by **{ctx.author}**!(reason=**{reason}**)",color=discord.Color.blue())
             embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",text="Made by Ekamjot#9133")
             embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
+            embed.set_image(url="https://cdn.discordapp.com/attachments/724157354106421288/727859761739071518/tenor-3.gif")
             await ctx.send(embed=embed)
 
 
@@ -38,11 +41,13 @@ async def ban(ctx , member : discord.Member ,*, reason=None):
         embed = discord.Embed(title="ModCamp",description=f"**{member.display_name}** has been banned by **{ctx.author}**! (reason=**No reason given!**",color=discord.Color.blue())
         embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",text="Made by Ekamjot#9133")
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
+        embed.set_image(url="https://cdn.discordapp.com/attachments/724157354106421288/727861108932608010/tenor-4.gif")
         await ctx.send(embed=embed)
     else:
         embed = discord.Embed(title="ModCamp",description=f"**{member.display_name}** was banned by **{ctx.author}**! (reason=**{reason}**)",color=discord.Color.blue())
         embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",text="Made by Ekamjot#9133")
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
+        embed.set_image(url="https://cdn.discordapp.com/attachments/724157354106421288/727861108932608010/tenor-4.gif")
         await ctx.send(embed=embed)
 
 
@@ -60,10 +65,17 @@ async def unban(ctx , * , member):
 
 
 
+status=cycle(["-help" , "in 7 servers!"])
+
 @client.event
 async def on_ready():
+    change_status.start()
     print("I have logged in as {0.user}".format(client))
-    return await client.change_presence(activity=discord.Activity(type=1, name="-help"))
+
+
+@tasks.loop(seconds=10.0)
+async def change_status():
+    await client.change_presence(activity=discord.Activity(type=1 , name=next(status)))
 
 @client.command()
 async def info(ctx):
@@ -103,6 +115,7 @@ async def help(ctx):
     )
 
     embed.add_field(name="**-info**", value="To know about the bot", inline=False)
+    embed.add_field(name="**-tservers**",value="To know the number of servers that I am in",inline=False)
     embed.add_field(name="**-avatar [member]**", value="To check avatar of other members", inline=False)
     embed.add_field(name="**-users**" , value="To know about the number of members in the server", inline=False)
     embed.add_field(name="**-botstatus**", value="To check the bot status", inline=False)
@@ -112,6 +125,8 @@ async def help(ctx):
     embed.add_field(name="**-unban [member#1234]**", value="To unban a person!(**Can be only used by the person who has ``Ban Members`` permission!**)" , inline=False)
     embed.add_field(name="**-role [member] [role]**", value="To give a role to a person!(**Can be only used by the person who has ``Manage Roles`` permission!**)" , inline=False)
     embed.add_field(name="**-removerole [member] [role]**",value="To remove a role from a person!(**Can be only used by the person who has ``Manage Roles`` permission!**)",inline=False)
+    embed.add_field(name="**-mute [member]**",value="To mute a person!(**Can be only used by the person who has ``Manage Roles`` permission!**)",inline=False)
+    embed.add_field(name="**-unmute [member]**",value="To unmute a person!(**Can be only used by the person who has ``Manage Roles`` permission!**)",inline=False)
     embed.add_field(name="**-purge [number of messages]**",value="To delete a number of messages!(**Can be only used by the person who has ``Manage Messages`` permission!**)",inline=False)
     embed.add_field(name="**-warn [member] [reason]**",value="To warn a person!(**Can be only used by the person who has ``Ban Members`` permission!**)",inline=False)
     embed.add_field(name="**-report [issue]**", value="To report a issue!", inline=False)
@@ -129,7 +144,7 @@ async def ready(ctx):
     await ctx.send("> **LBS Trivia Bot is connected successfully!** :white_check_mark:")
 
 @client.command()
-@has_permissions(ban_members=True , kick_members=True)
+@has_permissions(ban_members=True)
 async def warn(ctx , member: discord.Member ,*, reason):
     user = client.get_user(member.id)
     server = ctx.guild.name
@@ -143,7 +158,10 @@ async def warn(ctx , member: discord.Member ,*, reason):
     await user.send(f"You were warned in **{server}** server for: **{reason}**")
     await ctx.send(embed=embed)
 
-
+@warn.error
+async def warn_error(ctx , error):
+    if isinstance(error , commands.MissingPermissions):
+        ctx.send(f"{ctx.author.mention} you need ``Ban Members`` permission to use this command!")
 
 @client.command()
 async def report(ctx ,*, message):
@@ -168,6 +186,15 @@ async def suggest_error(ctx , error):
         await ctx.send(f"**{ctx.author.mention}** please write the suggestion too!")
 
 @client.command()
+async def tservers(ctx):
+    embed = discord.Embed(
+        title="**ModCamp**" ,
+        description=f"I am currently in total **{len(client.guilds)}** servers!" ,
+        color = discord.Color.blue()
+    )
+    await ctx.send(embed=embed)
+
+@client.command()
 async def invite(ctx):
     embed = discord.Embed(
         title="**ModCamp**",
@@ -189,7 +216,7 @@ async def setnick(ctx , member: discord.Member ,*, nick):
     await member.edit(nick=nick)
     embed = discord.Embed(
         title="**ModCamp**",
-        description=":white_check_mark: **Nickname Changed!**",
+        description="**:white_check_mark:Nickname Changed!**",
         color=discord.Color.blue()
     )
     embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png", text = "Made by Ekamjot#9133")
@@ -210,10 +237,10 @@ async def botstatus(ctx):
         color=discord.Color.blue()
     )
     embed.set_footer(
-        icon_url="https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png",
+        icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",
         text="Made by Ekamjot#9133")
     embed.set_thumbnail(
-        url="https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png")
+        url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
     await ctx.send(embed=embed)
 
 @client.command()
@@ -223,9 +250,9 @@ async def users(ctx):
             description=f"{ctx.guild.member_count}",
             color=discord.Color.blue()
         )
-    embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png",
+    embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",
             text="Made by Ekamjot#9133")
-    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png")
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
     await ctx.send(embed=embed)
 
 @users.error
@@ -235,19 +262,24 @@ async def users_error(ctx , error):
 
 
 @client.command()
-async def avatar(ctx , member: discord.Member):
+async def avatar(ctx ,*, member: discord.Member):
     embed = discord.Embed(
-        title = "LBS Trivia" ,
+        title = "ModCamp" ,
         description= f" Showing {member.mention}'s avatar!" ,
         color = discord.Color.blue()
     )
     embed.set_footer(
-        icon_url="https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png",
+        icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",
         text="Made by Ekamjot#9133")
 
 
     embed.set_image(url=f"{member.avatar_url}")
     await ctx.send(embed=embed)
+
+@client.command()
+@has_permissions(administrator=True)
+async def give(ctx,member:discord.Member , karma: int):
+    await ctx.send(f"Gave {karma} karma to {member}. They now have {karma} karma!")
 
 @avatar.error
 async def avatar_error(ctx , error):
@@ -260,12 +292,12 @@ async def avatar_error(ctx , error):
 async def role(ctx , member: discord.Member ,*, role: discord.Role):
     await member.add_roles(role)
     embed = discord.Embed(
-        title="LBS Trivia" ,
+        title="ModCamp" ,
         description=f":white_check_mark: **Changed roles for {member}** , ``+{role}`` (role to **{member}** was given by **{ctx.author})**" ,
         color = discord.Color.blue()
     )
     embed.set_footer(
-        icon_url="https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png",
+        icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",
         text="Made by Ekamjot#9133")
     await ctx.send(embed=embed)
 
@@ -281,12 +313,12 @@ async def role_error(ctx , error):
 async def removerole(ctx , member: discord.Member ,*, role: discord.Role):
     await member.remove_roles(role)
     embed = discord.Embed(
-        title="LBS Trivia",
+        title="ModCamp",
         description=f":white_check_mark: **Removed roles for {member}** , ``-{role}`` (``{role}`` role of the user **{member}** was removed by **{ctx.author})**",
         color=discord.Color.blue()
     )
     embed.set_footer(
-        icon_url="https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png",
+        icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",
         text="Made by Ekamjot#9133")
     await ctx.send(embed=embed)
 
@@ -311,6 +343,32 @@ async def purge_error(ctx , error):
 async def ping(ctx):
     await ctx.send(f"Pong! ({round(client.latency*1000)}ms)")
 
+
+@client.command()
+@has_permissions(manage_roles=True)
+async def mute(ctx,*, member: discord.Member):
+    mute_role = discord.utils.get(ctx.guild.roles, name="Muted")
+    await member.add_roles(mute_role)
+    await ctx.send(f"{member} was muted!")
+
+@mute.error
+async def mute_error(ctx , error):
+    if isinstance(error , commands.CommandInvokeError):
+        await ctx.send("**Please make a role named as ``Muted`` first!**")
+
+@client.command()
+@has_permissions(manage_roles=True)
+async def unmute(ctx, *, member: discord.Member):
+    mute_role = discord.utils.get(ctx.guild.roles, name="Muted" or "muted")
+    await member.remove_roles(mute_role)
+    await ctx.send(f"{member} was unmuted!")
+
+@unmute.error
+async def unmute_error(ctx , error):
+    if isinstance(error , commands.MissingRequiredArgument):
+        await ctx.send("**Please mention a member to unmute!**")
+
+
 @client.event
 async def on_member_join(member):
     embed = discord.Embed(
@@ -320,13 +378,15 @@ async def on_member_join(member):
     )
     embed.set_thumbnail(url=f"{member.avatar_url}")
     embed.set_author(
-        icon_url="https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png",
+        icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",
         name="LBS Trivia")
     embed.set_footer(
-        icon_url="https://cdn.discordapp.com/attachments/724157354106421288/724994399452528730/PVcZAHL6AjRzF3CEhAGD1McKptRcS_3oT0HVW5-lTkeXAniryHiF09Oh_09QXx3nFRON.png",
+        icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",
         text="Made by Ekamjot#9133")
     channel = client.get_channel(id=724157354106421288)
     await channel.send(embed=embed)
+
+
 
 
 
