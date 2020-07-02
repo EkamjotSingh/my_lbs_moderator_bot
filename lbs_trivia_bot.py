@@ -363,6 +363,9 @@ async def mute_error(ctx , error):
     if isinstance(error , commands.CommandInvokeError):
         await ctx.send("**Please make a role named as ``Muted`` first!**")
 
+    elif isinstance(error, commands.MissingPermissions):
+        await ctx.send(f"{ctx.author.mention} you need ``Manage Roles`` permission for this command!")
+
 @client.command()
 @has_permissions(manage_roles=True)
 async def unmute(ctx, *, member: discord.Member):
@@ -382,6 +385,11 @@ async def unmute(ctx, *, member: discord.Member):
 async def unmute_error(ctx , error):
     if isinstance(error , commands.MissingRequiredArgument):
         await ctx.send("**Please mention a member to unmute!**")
+
+    elif isinstance(error , commands.MissingPermissions):
+        await ctx.send(f"{ctx.author.mention} you need ``Manage Roles`` permission to use this command!")
+
+
 
 @client.event
 async def on_member_join(member):
