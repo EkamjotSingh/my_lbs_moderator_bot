@@ -349,7 +349,14 @@ async def ping(ctx):
 async def mute(ctx,*, member: discord.Member):
     mute_role = discord.utils.get(ctx.guild.roles, name="Muted")
     await member.add_roles(mute_role)
-    await ctx.send(f"{member} was muted!")
+    embed = discord.Embed(
+        title="ModCamp" ,
+        description=f":white_check_mark: **{member}** was muted by **{ctx.message.author}**!" ,
+        color = discord.Color.blue()
+    )
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
+    embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",text="Made by Ekamjot#9133")
+    await ctx.send(embed=embed)
 
 @mute.error
 async def mute_error(ctx , error):
@@ -361,13 +368,20 @@ async def mute_error(ctx , error):
 async def unmute(ctx, *, member: discord.Member):
     mute_role = discord.utils.get(ctx.guild.roles, name="Muted" or "muted")
     await member.remove_roles(mute_role)
-    await ctx.send(f"{member} was unmuted!")
+    embed = discord.Embed(
+        title="ModCamp",
+        description=f":white_check_mark: **{member}** was unmuted by **{ctx.message.author}**!",
+        color=discord.Color.blue()
+    )
+
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
+    embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png", text = "Made by Ekamjot#9133")
+    await ctx.send(embed=embed)
 
 @unmute.error
 async def unmute_error(ctx , error):
     if isinstance(error , commands.MissingRequiredArgument):
         await ctx.send("**Please mention a member to unmute!**")
-
 
 @client.event
 async def on_member_join(member):
