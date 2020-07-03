@@ -245,7 +245,7 @@ async def botstatus(ctx):
     embed = discord.Embed(
         title="**Bot Status**",
         description='''Take it easy!
-**Eveything seems good for now!** ''',
+**Everything seems good for now!** ''',
         color=discord.Color.blue()
     )
     embed.set_footer(
