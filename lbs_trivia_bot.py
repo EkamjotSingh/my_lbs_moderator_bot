@@ -150,6 +150,10 @@ async def help(ctx):
 @client.command()
 async def ready(ctx):
     await ctx.send("> **LBS Trivia Bot is connected successfully!** :white_check_mark:")
+@client.command()
+async def speak(ctx,message):
+    answer = random.choice(["lol" , "loli" , "yes" , "no" , "nope" , "ok" , "umm","maybe","IDK","I dont know" , "me neither","nevermind" ,"Are you sure about that?" , "Are you sorry for that" , "Damn" ,"oh","bruh","sayonara","hello","hi"])
+    await ctx.send(answer)
 
 @client.command()
 @has_permissions(ban_members=True)
@@ -415,6 +419,11 @@ async def on_member_join(member):
         text="Made by Ekamjot#9133")
     channel = client.get_channel(id=724157354106421288)
     await channel.send(embed=embed)
+
+@client.command()
+async def on_member_join(ctx, member: discord.Member):
+    incoming = client.get_user(member.id)
+    await incoming.send(f"Hello {member.mention}")
 
 
 
