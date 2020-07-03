@@ -16,14 +16,18 @@ client = commands.Bot(command_prefix="-")
 @client.command()
 @has_permissions(kick_members=True)
 async def kick(ctx , member : discord.Member , * , reason=None):
-        await member.kick(reason=reason)
-        if reason==None:
+    kicked = client.get_user(member.id)
+    server_name = ctx.guild.name
+    await member.kick(reason=reason)
+    if reason==None:
+            await kicked.send(f"You were kicked from **{server_name}** for:**(no reason given)**")
             embed = discord.Embed(title="ModCamp" , description=f"**{member.display_name}** has been kicked by **{ctx.author}**!(reason=**No reason given!**)"  , color = discord.Color.blue())
             embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png" , text="Made by Ekamjot#9133")
             embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
             embed.set_image(url="https://cdn.discordapp.com/attachments/724157354106421288/727859761739071518/tenor-3.gif")
             await ctx.send(embed=embed)
-        else:
+    else:
+            await kicked.send(f"You were kicked from **{server_name}** for:**{reason}**")
             embed = discord.Embed(title="ModCamp",description=f"**{member.display_name}** has been kicked by **{ctx.author}**!(reason=**{reason}**)",color=discord.Color.blue())
             embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",text="Made by Ekamjot#9133")
             embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
@@ -36,14 +40,18 @@ async def kick(ctx , member : discord.Member , * , reason=None):
 @client.command()
 @has_permissions(ban_members=True)
 async def ban(ctx , member : discord.Member ,*, reason=None):
+    banned = client.get_user(member.id)
+    the_server = ctx.guild.name
     await member.ban(reason=reason)
     if reason==None:
+        await banned.send(f"You were banned from **{the_server}** for:**(no reason given)**")
         embed = discord.Embed(title="ModCamp",description=f"**{member.display_name}** has been banned by **{ctx.author}**! (reason=**No reason given!**",color=discord.Color.blue())
         embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",text="Made by Ekamjot#9133")
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
         embed.set_image(url="https://cdn.discordapp.com/attachments/724157354106421288/727861108932608010/tenor-4.gif")
         await ctx.send(embed=embed)
     else:
+        await banned.send(f"You were banned from **{the_server}** for:**{reason}**")
         embed = discord.Embed(title="ModCamp",description=f"**{member.display_name}** was banned by **{ctx.author}**! (reason=**{reason}**)",color=discord.Color.blue())
         embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",text="Made by Ekamjot#9133")
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
@@ -346,7 +354,7 @@ async def ping(ctx):
 
 @client.command()
 @has_permissions(manage_roles=True)
-async def mute(ctx,*, member: discord.Member):
+async def mute(ctx,*, member: discord.Member, mute_time: int):
     mute_role = discord.utils.get(ctx.guild.roles, name="Muted")
     await member.add_roles(mute_role)
     embed = discord.Embed(
