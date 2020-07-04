@@ -7,8 +7,7 @@ from discord.ext.commands import Bot
 import random
 from discord import Message
 from itertools import cycle
-import pytz
-from pytz import all_timezones
+
 
 client = commands.Bot(command_prefix="-")
 
