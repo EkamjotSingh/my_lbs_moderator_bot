@@ -7,6 +7,8 @@ from discord.ext.commands import Bot
 import random
 from discord import Message
 from itertools import cycle
+import pytz
+from pytz import all_timezones
 
 client = commands.Bot(command_prefix="-")
 
@@ -73,7 +75,7 @@ async def unban(ctx , * , member):
 
 
 
-status=cycle(["-help" , "in 7 servers!"])
+status=cycle(["-help" , "in 6 servers!"])
 
 @client.event
 async def on_ready():
@@ -154,6 +156,29 @@ async def ready(ctx):
 async def speak(ctx,message):
     answer = random.choice(["lol" , "loli" , "yes" , "no" , "nope" , "ok" , "umm","maybe","IDK","I dont know" , "me neither","nevermind" ,"Are you sure about that?" , "Are you sorry for that" , "Damn" ,"oh","bruh","sayonara","hello","hi"])
     await ctx.send(answer)
+
+@client.command()
+async def userinfo(ctx , member: discord.Member):
+    infouser = client.get_user(member.id)
+    embed = discord.Embed(
+        title =f"**{member}**" ,
+        color = discord.Color.blue()
+    )
+    embed.add_field(name="**Joined at:**" , value =member.joined_at.strftime("%a , %#d %B %Y , %I:%M %p UTC") , inline=False)
+    embed.add_field(name="**Account Created on:**" , value=member.created_at.strftime("%a , %#d %B %Y , %I:%M %p UTC") , inline=False)
+    values = member.top_role
+    embed.add_field(name="**Top Role:**" , value =values.mention , inline=False)
+    a = discord.utils.get(member.guild_permissions)
+    embed.add_field(name="**Status:**" , value=member.status , inline=False)
+    embed.set_thumbnail(url=member.avatar_url)
+    embed.set_footer(text=f"Member ID: {member.id} Requested by: {ctx.author}")
+
+    await ctx.send(embed=embed)
+
+@userinfo.error
+async def userinfo_error(ctx , error):
+    if isinstance(error , commands.BadArgument):
+        await ctx.send("**No member with that name was found!**")
 
 @client.command()
 @has_permissions(ban_members=True)
@@ -334,6 +359,8 @@ async def removerole(ctx , member: discord.Member ,*, role: discord.Role):
         text="Made by Ekamjot#9133")
     await ctx.send(embed=embed)
 
+
+
 @removerole.error
 async def removerole_error(ctx , error):
     if isinstance(error , commands.MissingPermissions):
@@ -424,7 +451,6 @@ async def on_member_join(member):
 async def on_member_join(ctx, member: discord.Member):
     incoming = client.get_user(member.id)
     await incoming.send(f"Hello {member.mention}")
-
 
 
 
