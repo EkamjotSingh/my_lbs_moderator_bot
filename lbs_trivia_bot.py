@@ -148,7 +148,7 @@ async def help(ctx):
         icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",
         text="Made by Ekamjot#9133")
     await help_user.send(embed=embed)
-    await ctx.send(**"Check your DM for a list of help commands!")
+    await ctx.send("**Check your DM for a list of help commands!**")
 
 @client.command()
 async def ready(ctx):
