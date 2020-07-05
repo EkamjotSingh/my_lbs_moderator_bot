@@ -150,7 +150,7 @@ async def help(ctx):
 
 @client.command()
 async def ready(ctx):
-    await ctx.send("> **LBS Trivia Bot is connected successfully!** :white_check_mark:")
+    await ctx.send("> **ModCamp is connected successfully!** :white_check_mark:")
 @client.command()
 async def speak(ctx,message):
     answer = random.choice(["lol" , "loli" , "yes" , "no" , "nope" , "ok" , "umm","maybe","IDK","I dont know" , "me neither","nevermind" ,"Are you sure about that?" , "Are you sorry for that" , "Damn" ,"oh","bruh","sayonara","hello","hi"])
@@ -205,7 +205,7 @@ async def warn_error(ctx , error):
 @client.command()
 async def report(ctx ,*, message):
     myself = client.get_user(457044079994470402)
-    await myself.send(f"Complaint :- {message}")
+    await myself.send(f"Complaint :- {message} by {ctx.author}")
     await ctx.send("Your complaint has been registered successfully! We will fix this as soon as possible!")
 
 @report.error
