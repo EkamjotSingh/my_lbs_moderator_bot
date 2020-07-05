@@ -117,7 +117,7 @@ Thanks :slight_smile:''',
 
 @client.command()
 async def help(ctx):
-    help_user = client.get_user(member.id)
+    help_user = client.get_user(ctx.author.id)
     embed = discord.Embed(
         title="**Help Commands!**",
         description="These are the commands that you can use:",
