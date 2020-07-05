@@ -9,7 +9,7 @@ from discord import Message
 from itertools import cycle
 
 
-client = commands.Bot(command_prefix="-")
+client = commands.Bot(command_prefix="+")
 
 @client.remove_command("help")
 
@@ -123,24 +123,24 @@ async def help(ctx):
         colour=discord.Colour.blue()
     )
 
-    embed.add_field(name="**-info**", value="To know about the bot", inline=False)
-    embed.add_field(name="**-tservers**",value="To know the number of servers that I am in",inline=False)
-    embed.add_field(name="**-avatar [member]**", value="To check avatar of other members", inline=False)
-    embed.add_field(name="**-users**" , value="To know about the number of members in the server", inline=False)
-    embed.add_field(name="**-botstatus**", value="To check the bot status", inline=False)
-    embed.add_field(name="**-setnick [member] [nickname]**",value="To change the nickname of a person!(**Can be only used by the person who has ``Manage Nicknames`` permission!**)", inline=False)
-    embed.add_field(name="**-kick [member]**", value="To kick a person out of the server!(**Can be only used by the person who has ``Kick Members`` permission!**)", inline=False)
-    embed.add_field(name="**-ban [member]**", value="To ban a person!(**Can be only used by the person who has ``Ban Members`` permission!**)" , inline=False)
-    embed.add_field(name="**-unban [member#1234]**", value="To unban a person!(**Can be only used by the person who has ``Ban Members`` permission!**)" , inline=False)
-    embed.add_field(name="**-role [member] [role]**", value="To give a role to a person!(**Can be only used by the person who has ``Manage Roles`` permission!**)" , inline=False)
-    embed.add_field(name="**-removerole [member] [role]**",value="To remove a role from a person!(**Can be only used by the person who has ``Manage Roles`` permission!**)",inline=False)
-    embed.add_field(name="**-mute [member]**",value="To mute a person!(**Can be only used by the person who has ``Manage Roles`` permission!**)",inline=False)
-    embed.add_field(name="**-unmute [member]**",value="To unmute a person!(**Can be only used by the person who has ``Manage Roles`` permission!**)",inline=False)
-    embed.add_field(name="**-purge [number of messages]**",value="To delete a number of messages!(**Can be only used by the person who has ``Manage Messages`` permission!**)",inline=False)
-    embed.add_field(name="**-warn [member] [reason]**",value="To warn a person!(**Can be only used by the person who has ``Ban Members`` permission!**)",inline=False)
-    embed.add_field(name="**-report [issue]**", value="To report a issue!", inline=False)
-    embed.add_field(name="**-suggest [suggestion]**", value="To suggest something!", inline=False)
-    embed.add_field(name="**-invite**", value="To invite me to your server", inline=False)
+    embed.add_field(name="**+info**", value="To know about the bot", inline=False)
+    embed.add_field(name="**+tservers**",value="To know the number of servers that I am in",inline=False)
+    embed.add_field(name="**+avatar [member]**", value="To check avatar of other members", inline=False)
+    embed.add_field(name="**+users**" , value="To know about the number of members in the server", inline=False)
+    embed.add_field(name="**+botstatus**", value="To check the bot status", inline=False)
+    embed.add_field(name="**+setnick [member] [nickname]**",value="To change the nickname of a person!(**Can be only used by the person who has ``Manage Nicknames`` permission!**)", inline=False)
+    embed.add_field(name="**+kick [member]**", value="To kick a person out of the server!(**Can be only used by the person who has ``Kick Members`` permission!**)", inline=False)
+    embed.add_field(name="**+ban [member]**", value="To ban a person!(**Can be only used by the person who has ``Ban Members`` permission!**)" , inline=False)
+    embed.add_field(name="**+unban [member#1234]**", value="To unban a person!(**Can be only used by the person who has ``Ban Members`` permission!**)" , inline=False)
+    embed.add_field(name="**+role [member] [role]**", value="To give a role to a person!(**Can be only used by the person who has ``Manage Roles`` permission!**)" , inline=False)
+    embed.add_field(name="**+removerole [member] [role]**",value="To remove a role from a person!(**Can be only used by the person who has ``Manage Roles`` permission!**)",inline=False)
+    embed.add_field(name="**+mute [member]**",value="To mute a person!(**Can be only used by the person who has ``Manage Roles`` permission!**)",inline=False)
+    embed.add_field(name="**+unmute [member]**",value="To unmute a person!(**Can be only used by the person who has ``Manage Roles`` permission!**)",inline=False)
+    embed.add_field(name="**+purge [number of messages]**",value="To delete a number of messages!(**Can be only used by the person who has ``Manage Messages`` permission!**)",inline=False)
+    embed.add_field(name="**+warn [member] [reason]**",value="To warn a person!(**Can be only used by the person who has ``Ban Members`` permission!**)",inline=False)
+    embed.add_field(name="**+report [issue]**", value="To report a issue!", inline=False)
+    embed.add_field(name="**+suggest [suggestion]**", value="To suggest something!", inline=False)
+    embed.add_field(name="**+invite**", value="To invite me to your server", inline=False)
     embed.set_thumbnail(
         url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
     embed.set_footer(
