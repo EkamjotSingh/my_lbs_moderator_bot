@@ -201,9 +201,7 @@ async def warn_error(ctx , error):
     if isinstance(error , commands.MissingPermissions):
         await ctx.send(f"{ctx.author.mention} you need ``Ban Members`` permission to use this command!")
 
-    elif isinstance(error , commands.MissingRequiredArgument):
-        await ctx.send(f"{ctx.author.mention} please mention a member or a reason!")
-
+   
 @client.command()
 async def report(ctx ,*, message):
     myself = client.get_user(457044079994470402)
