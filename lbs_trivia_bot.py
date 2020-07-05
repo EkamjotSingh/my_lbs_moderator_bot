@@ -267,6 +267,7 @@ async def setnick_error(ctx , error):
     if isinstance(error , commands.MissingPermissions):
         await ctx.send(f"**{ctx.author.mention}** you need ``Manage Nicknames`` permission!")
 
+
 @client.command()
 async def botstatus(ctx):
     embed = discord.Embed(
