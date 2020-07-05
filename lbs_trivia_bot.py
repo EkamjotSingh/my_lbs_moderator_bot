@@ -117,6 +117,7 @@ Thanks :slight_smile:''',
 
 @client.command()
 async def help(ctx):
+    help_user = client.get_user(member.id)
     embed = discord.Embed(
         title="**Help Commands!**",
         description="These are the commands that you can use:",
@@ -146,7 +147,8 @@ async def help(ctx):
     embed.set_footer(
         icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",
         text="Made by Ekamjot#9133")
-    await ctx.send(embed=embed)
+    await help_user.send(embed=embed)
+    await ctx.send(**"Check your DM for a list of help commands!")
 
 @client.command()
 async def ready(ctx):
