@@ -74,7 +74,7 @@ async def unban(ctx , * , member):
 
 
 
-status=cycle(["-help" , "in 6 servers!"])
+status=cycle(["+help" , "in 6 servers!"])
 
 @client.event
 async def on_ready():
