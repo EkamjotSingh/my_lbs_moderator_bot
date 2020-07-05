@@ -74,7 +74,7 @@ async def unban(ctx , * , member):
 
 
 
-status=cycle(["+help" , "in 6 servers!"])
+status=cycle(["+help" , "in 7 servers!"])
 
 @client.event
 async def on_ready():
@@ -197,7 +197,10 @@ async def warn(ctx , member: discord.Member ,*, reason):
 @warn.error
 async def warn_error(ctx , error):
     if isinstance(error , commands.MissingPermissions):
-        ctx.send(f"{ctx.author.mention} you need ``Ban Members`` permission to use this command!")
+        await ctx.send(f"{ctx.author.mention} you need ``Ban Members`` permission to use this command!")
+
+    elif isinstance(error , commands.MissingRequiredArgument):
+        await ctx.send(f"{ctx.author.mention} please mention a member or a reason!")
 
 @client.command()
 async def report(ctx ,*, message):
