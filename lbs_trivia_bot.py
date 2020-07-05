@@ -205,7 +205,7 @@ async def warn_error(ctx , error):
 @client.command()
 async def report(ctx ,*, message):
     myself = client.get_user(457044079994470402)
-    await myself.send(f"Complaint :- {message} by {ctx.author} in {ctx.guild.name")
+    await myself.send(f"Complaint :- {message} by {ctx.author} in {ctx.guild.name}")
     await ctx.send("Your complaint has been registered successfully! We will fix this as soon as possible!")
 
 @report.error
