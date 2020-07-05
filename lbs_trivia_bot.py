@@ -97,15 +97,15 @@ Feeling it difficult to configure moderation bots? :thinking:
 In me there are a number of commands to keep your server free from spammers!
 
 You can give role to any person , you can even kick or ban a user with my help!
-My prefix is **-**
+My prefix is **+**
 
 I'll help you in moderating your server!
 
 To assign roles always keep the bot role on top of the role you want to assign!!
 
-To know my commands and for more information type ``-help`` 
+To know my commands and for more information type ``+help`` 
 
-To invite me to your server type ``-invite``
+To invite me to your server type ``+invite``
 
 If you face any problem you can DM Ekamjot#9133
 Thanks :slight_smile:''',
