@@ -129,7 +129,6 @@ async def help(ctx):
     embed.add_field(name="**+avatar [member]**", value="To check avatar of other members", inline=False)
     embed.add_field(name="**+users**" , value="To know about the number of members in the server", inline=False)
     embed.add_field(name="**+botstatus**", value="To check the bot status", inline=False)
-    embed.add_field(name="**+chnick [member] [nickname]**",value="To change the nickname of a person!(**Can be only used by the person who has ``Manage Nicknames`` permission!**)", inline=False)
     embed.add_field(name="**+kick [member]**", value="To kick a person out of the server!(**Can be only used by the person who has ``Kick Members`` permission!**)", inline=False)
     embed.add_field(name="**+ban [member]**", value="To ban a person!(**Can be only used by the person who has ``Ban Members`` permission!**)" , inline=False)
     embed.add_field(name="**+unban [member#1234]**", value="To unban a person!(**Can be only used by the person who has ``Ban Members`` permission!**)" , inline=False)
@@ -249,23 +248,6 @@ async def invite(ctx):
             url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
     await ctx.send(embed=embed)
 
-@client.command()
-@has_permissions(manage_nicknames=True)
-async def chnick(ctx , member: discord.Member ,*, nick):
-    await member.edit(nick=nick)
-    embed = discord.Embed(
-        title="**ModCamp**",
-        description="**:white_check_mark:Nickname Changed!**",
-        color=discord.Color.blue()
-    )
-    embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png", text = "Made by Ekamjot#9133")
-    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
-    await ctx.send(embed=embed)
-
-@chnick.error
-async def chnick_error(ctx , error):
-    if isinstance(error , commands.MissingPermissions):
-        await ctx.send(f"**{ctx.author.mention}** you need ``Manage Nicknames`` permission!")
 
 
 @client.command()
