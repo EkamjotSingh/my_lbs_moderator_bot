@@ -74,7 +74,7 @@ async def unban(ctx , * , member):
 
 
 
-status=cycle(["+help" , "in 7 servers!"])
+status=cycle(["-help" , "in 9 servers!"])
 
 @client.event
 async def on_ready():
@@ -93,20 +93,13 @@ async def info(ctx):
             description='''      ---ModCamp---
 Feeling it difficult to configure moderation bots? :thinking: 
 **No worries I am here to help you!**:slight_smile:
-
 In me there are a number of commands to keep your server free from spammers!
-
 You can give role to any person , you can even kick or ban a user with my help!
 My prefix is **+**
-
 I'll help you in moderating your server!
-
 To assign roles always keep the bot role on top of the role you want to assign!!
-
 To know my commands and for more information type ``+help`` 
-
 To invite me to your server type ``+invite``
-
 If you face any problem you can DM Ekamjot#9133
 Thanks :slight_smile:''',
             colour=discord.Colour.blue()
@@ -116,8 +109,31 @@ Thanks :slight_smile:''',
     await ctx.send(embed=embed)
 
 @client.command()
+async def guildinfo(ctx):
+    channels = len([x for x in ctx.guild.channels if type(x) == discord.TextChannel])
+    role_count = len(ctx.guild.roles)
+    online_members = len([y for y in ctx.guild.members if y.status == discord.Status.online or y.status == discord.Status.idle or y.status == discord.Status.dnd])
+    embed = discord.Embed(
+        title = f"**{ctx.guild.name}**" ,
+        color = discord.Color.blue()
+    )
+    embed.add_field(name="**Owner:**" , value=f"**{ctx.guild.owner}**" , inline=False)
+    embed.set_thumbnail(url=f"{ctx.guild.icon_url}")
+    embed.add_field(name=f"**Server Region:**" , value=f"**{ctx.guild.region}**")
+    embed.add_field(name="**Total Members:**" , value=f"**{ctx.guild.member_count}**" , inline=False)
+    embed.add_field(name="**Online Members:**" , value=f"**{online_members}**" , inline=False)
+    embed.add_field(name="**Text Channels:**", value=f"**{channels}**", inline=False)
+    embed.add_field(name="**Total Roles:**", value=f"**{role_count}**", inline=False)
+    embed.add_field(name="**Server Created at:**" , value=ctx.guild.created_at.strftime("%a , %#d %B %Y , %I:%M %p **UTC**") , inline=False)
+    embed.add_field(name="**Server ID:**", value=f"**{ctx.guild.id}**", inline=False)
+    embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png" , text="Made by Ekamjot#9133")
+    await ctx.send(embed=embed)
+
+
+
+@client.command()
 async def help(ctx):
-    help_user = client.get_user(ctx.author.id)
+    requested_id = client.get_user(ctx.author.id)
     embed = discord.Embed(
         title="**Help Commands!**",
         description="These are the commands that you can use:",
@@ -128,7 +144,9 @@ async def help(ctx):
     embed.add_field(name="**+tservers**",value="To know the number of servers that I am in",inline=False)
     embed.add_field(name="**+avatar [member]**", value="To check avatar of other members", inline=False)
     embed.add_field(name="**+users**" , value="To know about the number of members in the server", inline=False)
+    embed.add_field(name="**+guildinfo**" , value="To know about the server info!" , inline=False)
     embed.add_field(name="**+botstatus**", value="To check the bot status", inline=False)
+    embed.add_field(name="**+setnick [member] [nickname]**",value="To change the nickname of a person!(**Can be only used by the person who has ``Manage Nicknames`` permission!**)", inline=False)
     embed.add_field(name="**+kick [member]**", value="To kick a person out of the server!(**Can be only used by the person who has ``Kick Members`` permission!**)", inline=False)
     embed.add_field(name="**+ban [member]**", value="To ban a person!(**Can be only used by the person who has ``Ban Members`` permission!**)" , inline=False)
     embed.add_field(name="**+unban [member#1234]**", value="To unban a person!(**Can be only used by the person who has ``Ban Members`` permission!**)" , inline=False)
@@ -138,20 +156,19 @@ async def help(ctx):
     embed.add_field(name="**+unmute [member]**",value="To unmute a person!(**Can be only used by the person who has ``Manage Roles`` permission!**)",inline=False)
     embed.add_field(name="**+purge [number of messages]**",value="To delete a number of messages!(**Can be only used by the person who has ``Manage Messages`` permission!**)",inline=False)
     embed.add_field(name="**+warn [member] [reason]**",value="To warn a person!(**Can be only used by the person who has ``Ban Members`` permission!**)",inline=False)
-    embed.add_field(name="**+report [issue]**", value="To report a issue!", inline=False)
-    embed.add_field(name="**+suggest [suggestion]**", value="To suggest something!", inline=False)
     embed.add_field(name="**+invite**", value="To invite me to your server", inline=False)
     embed.set_thumbnail(
         url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
     embed.set_footer(
         icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",
         text="Made by Ekamjot#9133")
-    await help_user.send(embed=embed)
+    await requested_id.send(embed=embed)
     await ctx.send("**Check your DM for a list of help commands!**")
+
 
 @client.command()
 async def ready(ctx):
-    await ctx.send("> **ModCamp is connected successfully!** :white_check_mark:")
+    await ctx.send("> **LBS Trivia Bot is connected successfully!** :white_check_mark:")
 @client.command()
 async def speak(ctx,message):
     answer = random.choice(["lol" , "loli" , "yes" , "no" , "nope" , "ok" , "umm","maybe","IDK","I dont know" , "me neither","nevermind" ,"Are you sure about that?" , "Are you sorry for that" , "Damn" ,"oh","bruh","sayonara","hello","hi"])
@@ -200,28 +217,11 @@ async def warn_error(ctx , error):
     if isinstance(error , commands.MissingPermissions):
         await ctx.send(f"{ctx.author.mention} you need ``Ban Members`` permission to use this command!")
 
-   
-@client.command()
-async def report(ctx ,*, message):
-    myself = client.get_user(457044079994470402)
-    await myself.send(f"Complaint :- {message} by {ctx.author} in {ctx.guild.name}")
-    await ctx.send("Your complaint has been registered successfully! We will fix this as soon as possible!")
+    elif isinstance(error , commands.MissingRequiredArgument):
+        await ctx.send(f"{ctx.author.mention} please mention a member or a reason!")
 
-@report.error
-async def report_error(ctx , error):
-    if isinstance(error , commands.MissingRequiredArgument):
-        await ctx.send(f"**{ctx.author.mention}** please write the complaint too!")
 
-@client.command()
-async def suggest(ctx ,*, message):
-    myself = client.get_user(457044079994470402)
-    await myself.send(f"Suggestion :- {message}")
-    await ctx.send("Thank you for your suggestion! I have escalated your suggestion to the developer!:smile: If he finds your suggestion useful he will surely implement it! :wink:")
 
-@suggest.error
-async def suggest_error(ctx , error):
-    if isinstance(error , commands.MissingRequiredArgument):
-        await ctx.send(f"**{ctx.author.mention}** please write the suggestion too!")
 
 @client.command()
 async def tservers(ctx):
@@ -248,7 +248,23 @@ async def invite(ctx):
             url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
     await ctx.send(embed=embed)
 
+@client.command()
+@has_permissions(manage_nicknames=True)
+async def setnick(ctx , member: discord.Member ,*, nick):
+    await member.edit(nick=nick)
+    embed = discord.Embed(
+        title="**ModCamp**",
+        description="**:white_check_mark:Nickname Changed!**",
+        color=discord.Color.blue()
+    )
+    embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png", text = "Made by Ekamjot#9133")
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
+    await ctx.send(embed=embed)
 
+@setnick.error
+async def setnick_error(ctx , error):
+    if isinstance(error , commands.MissingPermissions):
+        await ctx.send(f"**{ctx.author.mention}** you need ``Manage Nicknames`` permission!")
 
 @client.command()
 async def botstatus(ctx):
