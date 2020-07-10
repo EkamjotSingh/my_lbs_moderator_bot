@@ -26,6 +26,7 @@ async def kick(ctx , member : discord.Member , * , reason=None):
             embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png" , text="Made by Ekamjot#9133")
             embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
             embed.set_image(url="https://cdn.discordapp.com/attachments/724157354106421288/727859761739071518/tenor-3.gif")
+            await ctx.message.delete()
             await ctx.send(embed=embed)
     else:
             await kicked.send(f"You were kicked from **{server_name}** for:**{reason}**")
@@ -33,6 +34,7 @@ async def kick(ctx , member : discord.Member , * , reason=None):
             embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",text="Made by Ekamjot#9133")
             embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
             embed.set_image(url="https://cdn.discordapp.com/attachments/724157354106421288/727859761739071518/tenor-3.gif")
+            await ctx.message.delete()
             await ctx.send(embed=embed)
 
 
@@ -50,6 +52,7 @@ async def ban(ctx , member : discord.Member ,*, reason=None):
         embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",text="Made by Ekamjot#9133")
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
         embed.set_image(url="https://cdn.discordapp.com/attachments/724157354106421288/727861108932608010/tenor-4.gif")
+        await ctx.message.delete()
         await ctx.send(embed=embed)
     else:
         await banned.send(f"You were banned from **{the_server}** for:**{reason}**")
@@ -57,6 +60,7 @@ async def ban(ctx , member : discord.Member ,*, reason=None):
         embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",text="Made by Ekamjot#9133")
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
         embed.set_image(url="https://cdn.discordapp.com/attachments/724157354106421288/727861108932608010/tenor-4.gif")
+        await ctx.message.delete()
         await ctx.send(embed=embed)
 
 
@@ -70,11 +74,12 @@ async def unban(ctx , * , member):
         user = ban_entry.user
         if (user.name , user.discriminator) == (member_name , member_discriminator):
             await ctx.guild.unban(user)
+            await ctx.message.delete()
             await ctx.send(f"**{user.name , user.discriminator}** was unbanned!")
 
 
 
-status=cycle(["+help" , "in 9 servers!"])
+status=cycle(["-help" , "in 10 servers!"])
 
 @client.event
 async def on_ready():
@@ -210,6 +215,7 @@ async def warn(ctx , member: discord.Member ,*, reason):
     embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png" , text="Made by Ekamjot#9133")
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
     await user.send(f"You were warned in **{server}** server for: **{reason}**")
+    await ctx.message.delete()
     await ctx.send(embed=embed)
 
 @warn.error
@@ -259,6 +265,7 @@ async def setnick(ctx , member: discord.Member ,*, nick):
     )
     embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png", text = "Made by Ekamjot#9133")
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
+    await ctx.message.delete()
     await ctx.send(embed=embed)
 
 @setnick.error
@@ -337,6 +344,7 @@ async def role(ctx , member: discord.Member ,*, role: discord.Role):
     embed.set_footer(
         icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",
         text="Made by Ekamjot#9133")
+    await ctx.message.delete()
     await ctx.send(embed=embed)
 
 @role.error
@@ -358,6 +366,7 @@ async def removerole(ctx , member: discord.Member ,*, role: discord.Role):
     embed.set_footer(
         icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",
         text="Made by Ekamjot#9133")
+    await ctx.message.delete()
     await ctx.send(embed=embed)
 
 
@@ -386,7 +395,7 @@ async def ping(ctx):
 
 @client.command()
 @has_permissions(manage_roles=True)
-async def mute(ctx,*, member: discord.Member, mute_time: int):
+async def mute(ctx,*, member: discord.Member, mute_time: int=None):
     mute_role = discord.utils.get(ctx.guild.roles, name="Muted")
     await member.add_roles(mute_role)
     embed = discord.Embed(
@@ -396,6 +405,7 @@ async def mute(ctx,*, member: discord.Member, mute_time: int):
     )
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
     embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",text="Made by Ekamjot#9133")
+    await ctx.message.delete()
     await ctx.send(embed=embed)
 
 @mute.error
@@ -419,6 +429,7 @@ async def unmute(ctx, *, member: discord.Member):
 
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
     embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png", text = "Made by Ekamjot#9133")
+    await ctx.message.delete()
     await ctx.send(embed=embed)
 
 @unmute.error
@@ -447,12 +458,6 @@ async def on_member_join(member):
         text="Made by Ekamjot#9133")
     channel = client.get_channel(id=724157354106421288)
     await channel.send(embed=embed)
-
-@client.command()
-async def on_member_join(ctx, member: discord.Member):
-    incoming = client.get_user(member.id)
-    await incoming.send(f"Hello {member.mention}")
-
 
 
 
