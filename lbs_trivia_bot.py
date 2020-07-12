@@ -100,11 +100,11 @@ Feeling it difficult to configure moderation bots? :thinking:
 **No worries I am here to help you!**:slight_smile:
 In me there are a number of commands to keep your server free from spammers!
 You can give role to any person , you can even kick or ban a user with my help!
-My prefix is **+**
+My prefix is **-**
 I'll help you in moderating your server!
 To assign roles always keep the bot role on top of the role you want to assign!!
-To know my commands and for more information type ``+help`` 
-To invite me to your server type ``+invite``
+To know my commands and for more information type ``-help`` 
+To invite me to your server type ``-invite``
 If you face any problem you can DM Ekamjot#9133
 Thanks :slight_smile:''',
             colour=discord.Colour.blue()
@@ -218,7 +218,7 @@ async def warn(ctx , member: discord.Member ,*, reason):
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
     await ctx.message.delete()
     await ctx.send(embed=embed)
-    
+
 
 @warn.error
 async def warn_error(ctx , error):
@@ -275,6 +275,17 @@ async def setnick_error(ctx , error):
     if isinstance(error , commands.MissingPermissions):
         await ctx.send(f"**{ctx.author.mention}** you need ``Manage Nicknames`` permission!")
 
+    elif isinstance(error , commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            title="**Correct Use**" ,
+            description=f"**-setnick [member] [nickname]**" ,
+            color=discord.Color.blue()
+        )
+        await ctx.send(embed=embed)
+
+    elif isinstance(error , commands.CommandInvokeError):
+        await ctx.send("**That user is the owner of this server! I do not have permission to change nickname of the owner!**")
+        
 @client.command()
 async def botstatus(ctx):
     embed = discord.Embed(
@@ -332,6 +343,9 @@ async def give(ctx,member:discord.Member , karma: int):
 async def avatar_error(ctx , error):
     if isinstance(error , commands.MissingRequiredArgument):
         await ctx.send(f"**{ctx.author.mention}** please mention a member too!")
+
+    elif isinstance(error , commands.BadArgument):
+        await ctx.send("**Sorry! I was not able to find that user!**")
 
 
 @client.command()
