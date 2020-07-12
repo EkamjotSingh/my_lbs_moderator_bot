@@ -9,7 +9,7 @@ from discord import Message
 from itertools import cycle
 
 
-client = commands.Bot(command_prefix="+")
+client = commands.Bot(command_prefix="-")
 
 @client.remove_command("help")
 
@@ -21,7 +21,7 @@ async def kick(ctx , member : discord.Member , * , reason=None):
     server_name = ctx.guild.name
     await member.kick(reason=reason)
     if reason==None:
-            await kicked.send(f"You were kicked from **{server_name}** for:**(no reason given)**")
+
             embed = discord.Embed(title="ModCamp" , description=f"**{member.display_name}** has been kicked by **{ctx.author}**!(reason=**No reason given!**)"  , color = discord.Color.blue())
             embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png" , text="Made by Ekamjot#9133")
             embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
@@ -29,7 +29,7 @@ async def kick(ctx , member : discord.Member , * , reason=None):
             await ctx.message.delete()
             await ctx.send(embed=embed)
     else:
-            await kicked.send(f"You were kicked from **{server_name}** for:**{reason}**")
+
             embed = discord.Embed(title="ModCamp",description=f"**{member.display_name}** has been kicked by **{ctx.author}**!(reason=**{reason}**)",color=discord.Color.blue())
             embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",text="Made by Ekamjot#9133")
             embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
@@ -47,7 +47,7 @@ async def ban(ctx , member : discord.Member ,*, reason=None):
     the_server = ctx.guild.name
     await member.ban(reason=reason)
     if reason==None:
-        await banned.send(f"You were banned from **{the_server}** for:**(no reason given)**")
+
         embed = discord.Embed(title="ModCamp",description=f"**{member.display_name}** has been banned by **{ctx.author}**! (reason=**No reason given!**",color=discord.Color.blue())
         embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",text="Made by Ekamjot#9133")
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
@@ -55,7 +55,7 @@ async def ban(ctx , member : discord.Member ,*, reason=None):
         await ctx.message.delete()
         await ctx.send(embed=embed)
     else:
-        await banned.send(f"You were banned from **{the_server}** for:**{reason}**")
+
         embed = discord.Embed(title="ModCamp",description=f"**{member.display_name}** was banned by **{ctx.author}**! (reason=**{reason}**)",color=discord.Color.blue())
         embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",text="Made by Ekamjot#9133")
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
@@ -79,7 +79,7 @@ async def unban(ctx , * , member):
 
 
 
-status=cycle(["+help" , "in 10 servers!"])
+status=cycle(["-help" , "in 11 servers!"])
 
 @client.event
 async def on_ready():
@@ -145,35 +145,37 @@ async def help(ctx):
         colour=discord.Colour.blue()
     )
 
-    embed.add_field(name="**+info**", value="To know about the bot", inline=False)
-    embed.add_field(name="**+tservers**",value="To know the number of servers that I am in",inline=False)
-    embed.add_field(name="**+avatar [member]**", value="To check avatar of other members", inline=False)
-    embed.add_field(name="**+users**" , value="To know about the number of members in the server", inline=False)
-    embed.add_field(name="**+guildinfo**" , value="To know about the server info!" , inline=False)
-    embed.add_field(name="**+botstatus**", value="To check the bot status", inline=False)
-    embed.add_field(name="**+setnick [member] [nickname]**",value="To change the nickname of a person!(**Can be only used by the person who has ``Manage Nicknames`` permission!**)", inline=False)
-    embed.add_field(name="**+kick [member]**", value="To kick a person out of the server!(**Can be only used by the person who has ``Kick Members`` permission!**)", inline=False)
-    embed.add_field(name="**+ban [member]**", value="To ban a person!(**Can be only used by the person who has ``Ban Members`` permission!**)" , inline=False)
-    embed.add_field(name="**+unban [member#1234]**", value="To unban a person!(**Can be only used by the person who has ``Ban Members`` permission!**)" , inline=False)
-    embed.add_field(name="**+role [member] [role]**", value="To give a role to a person!(**Can be only used by the person who has ``Manage Roles`` permission!**)" , inline=False)
-    embed.add_field(name="**+removerole [member] [role]**",value="To remove a role from a person!(**Can be only used by the person who has ``Manage Roles`` permission!**)",inline=False)
-    embed.add_field(name="**+mute [member]**",value="To mute a person!(**Can be only used by the person who has ``Manage Roles`` permission!**)",inline=False)
-    embed.add_field(name="**+unmute [member]**",value="To unmute a person!(**Can be only used by the person who has ``Manage Roles`` permission!**)",inline=False)
-    embed.add_field(name="**+purge [number of messages]**",value="To delete a number of messages!(**Can be only used by the person who has ``Manage Messages`` permission!**)",inline=False)
-    embed.add_field(name="**+warn [member] [reason]**",value="To warn a person!(**Can be only used by the person who has ``Ban Members`` permission!**)",inline=False)
-    embed.add_field(name="**+invite**", value="To invite me to your server", inline=False)
+    embed.add_field(name="**-info**", value="To know about the bot", inline=False)
+    embed.add_field(name="**-tservers**",value="To know the number of servers that I am in",inline=False)
+    embed.add_field(name="**-avatar [member]**", value="To check avatar of other members", inline=False)
+    embed.add_field(name="**-users**" , value="To know about the number of members in the server", inline=False)
+    embed.add_field(name="**-guildinfo**" , value="To know about the server info!" , inline=False)
+    embed.add_field(name="**-botstatus**", value="To check the bot status", inline=False)
+    embed.add_field(name="**-setnick [member] [nickname]**",value="To change the nickname of a person!(**Can be only used by the person who has ``Manage Nicknames`` permission!**)", inline=False)
+    embed.add_field(name="**-kick [member]**", value="To kick a person out of the server!(**Can be only used by the person who has ``Kick Members`` permission!**)", inline=False)
+    embed.add_field(name="**-ban [member]**", value="To ban a person!(**Can be only used by the person who has ``Ban Members`` permission!**)" , inline=False)
+    embed.add_field(name="**-unban [member#1234]**", value="To unban a person!(**Can be only used by the person who has ``Ban Members`` permission!**)" , inline=False)
+    embed.add_field(name="**-role [member] [role]**", value="To give a role to a person!(**Can be only used by the person who has ``Manage Roles`` permission!**)" , inline=False)
+    embed.add_field(name="**-removerole [member] [role]**",value="To remove a role from a person!(**Can be only used by the person who has ``Manage Roles`` permission!**)",inline=False)
+    embed.add_field(name="**-mute [member]**",value="To mute a person!(**Can be only used by the person who has ``Manage Roles`` permission!**)",inline=False)
+    embed.add_field(name="**-unmute [member]**",value="To unmute a person!(**Can be only used by the person who has ``Manage Roles`` permission!**)",inline=False)
+    embed.add_field(name="**-purge [number of messages]**",value="To delete a number of messages!(**Can be only used by the person who has ``Manage Messages`` permission!**)",inline=False)
+    embed.add_field(name="**-warn [member] [reason]**",value="To warn a person!(**Can be only used by the person who has ``Ban Members`` permission!**)",inline=False)
+    embed.add_field(name="**-invite**", value="To invite me to your server", inline=False)
     embed.set_thumbnail(
         url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
     embed.set_footer(
         icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",
         text="Made by Ekamjot#9133")
-    await requested_id.send(embed=embed)
-    await ctx.send("**Check your DM for a list of help commands!**")
+
+    await ctx.send(embed=embed)
 
 
 @client.command()
 async def ready(ctx):
-    await ctx.send("> **LBS Trivia Bot is connected successfully!** :white_check_mark:")
+    await ctx.message.delete()
+    await ctx.send("> **ModCamp is connected successfully!** :white_check_mark:")
+
 @client.command()
 async def speak(ctx,message):
     answer = random.choice(["lol" , "loli" , "yes" , "no" , "nope" , "ok" , "umm","maybe","IDK","I dont know" , "me neither","nevermind" ,"Are you sure about that?" , "Are you sorry for that" , "Damn" ,"oh","bruh","sayonara","hello","hi"])
@@ -214,9 +216,9 @@ async def warn(ctx , member: discord.Member ,*, reason):
     )
     embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png" , text="Made by Ekamjot#9133")
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
-    await user.send(f"You were warned in **{server}** server for: **{reason}**")
     await ctx.message.delete()
     await ctx.send(embed=embed)
+    
 
 @warn.error
 async def warn_error(ctx , error):
