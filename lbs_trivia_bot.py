@@ -146,6 +146,7 @@ async def help(ctx):
     )
 
     embed.add_field(name="**-info**", value="To know about the bot", inline=False)
+    embed.add_field(name="**-say**" , value="To announce anything with a @everyone ping!(**Can be only used by the person who has ``Manage Messages`` Permission!**)" , inline=False)
     embed.add_field(name="**-tservers**",value="To know the number of servers that I am in",inline=False)
     embed.add_field(name="**-avatar [member]**", value="To check avatar of other members", inline=False)
     embed.add_field(name="**-users**" , value="To know about the number of members in the server", inline=False)
@@ -169,6 +170,13 @@ async def help(ctx):
         text="Made by Ekamjot#9133")
 
     await ctx.send(embed=embed)
+
+
+@client.command()
+@has_permissions(manage_messages=True)
+async def say(ctx,*,announcement):
+    await ctx.send(f'''@everyone 
+{announcement}''')
 
 
 @client.command()
@@ -285,7 +293,7 @@ async def setnick_error(ctx , error):
 
     elif isinstance(error , commands.CommandInvokeError):
         await ctx.send("**That user is the owner of this server! I do not have permission to change nickname of the owner!**")
-        
+
 @client.command()
 async def botstatus(ctx):
     embed = discord.Embed(
