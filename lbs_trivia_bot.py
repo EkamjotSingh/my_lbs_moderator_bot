@@ -25,7 +25,6 @@ async def kick(ctx , member : discord.Member , * , reason=None):
             embed = discord.Embed(title="ModCamp" , description=f"**{member.display_name}** has been kicked by **{ctx.author}**!(reason=**No reason given!**)"  , color = discord.Color.blue())
             embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png" , text="Made by Ekamjot#9133")
             embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
-            embed.set_image(url="https://cdn.discordapp.com/attachments/724157354106421288/727859761739071518/tenor-3.gif")
             await ctx.message.delete()
             await ctx.send(embed=embed)
     else:
@@ -33,7 +32,6 @@ async def kick(ctx , member : discord.Member , * , reason=None):
             embed = discord.Embed(title="ModCamp",description=f"**{member.display_name}** has been kicked by **{ctx.author}**!(reason=**{reason}**)",color=discord.Color.blue())
             embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",text="Made by Ekamjot#9133")
             embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
-            embed.set_image(url="https://cdn.discordapp.com/attachments/724157354106421288/727859761739071518/tenor-3.gif")
             await ctx.message.delete()
             await ctx.send(embed=embed)
 
@@ -51,7 +49,6 @@ async def ban(ctx , member : discord.Member ,*, reason=None):
         embed = discord.Embed(title="ModCamp",description=f"**{member.display_name}** has been banned by **{ctx.author}**! (reason=**No reason given!**",color=discord.Color.blue())
         embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",text="Made by Ekamjot#9133")
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
-        embed.set_image(url="https://cdn.discordapp.com/attachments/724157354106421288/727861108932608010/tenor-4.gif")
         await ctx.message.delete()
         await ctx.send(embed=embed)
     else:
@@ -59,7 +56,6 @@ async def ban(ctx , member : discord.Member ,*, reason=None):
         embed = discord.Embed(title="ModCamp",description=f"**{member.display_name}** was banned by **{ctx.author}**! (reason=**{reason}**)",color=discord.Color.blue())
         embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",text="Made by Ekamjot#9133")
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
-        embed.set_image(url="https://cdn.discordapp.com/attachments/724157354106421288/727861108932608010/tenor-4.gif")
         await ctx.message.delete()
         await ctx.send(embed=embed)
 
@@ -175,6 +171,7 @@ async def help(ctx):
 @client.command()
 @has_permissions(manage_messages=True)
 async def say(ctx,*,announcement):
+    await ctx.message.delete()
     await ctx.send(f'''@everyone 
 {announcement}''')
 
