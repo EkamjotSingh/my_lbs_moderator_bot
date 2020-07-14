@@ -75,6 +75,19 @@ async def unban(ctx , * , member):
             await ctx.message.delete()
             await ctx.send(f"**{user.name , user.discriminator}** was unbanned!")
 
+@unban.error
+async def unban_error(ctx , error):
+    if isinstance(error , commands.MissingPermissions):
+        await ctx.send(f"**{ctx.author.mention} you do not have permissions required for this command! You need ``Ban Members`` permission for this command!**")
+
+    elif isinstance(error , commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            title = "**Correct Use**" ,
+            description= "**-unban [member#1234]**" ,
+            color = discord.Color.blue()
+        )
+        await ctx.send(embed=embed)
+
 
 
 status=cycle(["-help" , "in 14 servers!"])
@@ -229,6 +242,15 @@ async def userinfo_error(ctx , error):
     if isinstance(error , commands.BadArgument):
         await ctx.send("**No member with that name was found!**")
 
+    elif isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+                title="**Correct Use**",
+                description="**-userinfo [user]**",
+                color=discord.Color.blue()
+                )
+        await ctx.send(embed=embed)
+
+
 @client.command()
 @has_permissions(ban_members=True)
 async def warn(ctx , member: discord.Member ,*, reason):
@@ -250,8 +272,22 @@ async def warn_error(ctx , error):
     if isinstance(error , commands.MissingPermissions):
         await ctx.send(f"{ctx.author.mention} you need ``Ban Members`` permission to use this command!")
 
-    elif isinstance(error , commands.MissingRequiredArgument):
-        await ctx.send(f"{ctx.author.mention} please mention a member or a reason!")
+
+    elif isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+        title="**Correct Use**",
+        description="**-warn [member][reason]**",
+        color=discord.Color.blue()
+                )
+        await ctx.send(embed=embed)
+
+    elif isinstance(error, commands.CommandInvokeError):
+        await ctx.send("**I do not have the permissions to use this command. Please provide me permissions and try again!**")
+
+    elif isinstance(error , commands.BadArgument):
+        await ctx.send("**Sorry I was not able to find that user!**")
+
+
 
 
 
@@ -308,8 +344,11 @@ async def setnick_error(ctx , error):
         )
         await ctx.send(embed=embed)
 
+    elif isinstance(error , commands.BadArgument):
+        await ctx.send("**Sorry I was not able to find that user!**")
+
     elif isinstance(error , commands.CommandInvokeError):
-        await ctx.send("**That user is the owner of this server! I do not have permission to change nickname of the owner!**")
+        await ctx.send("**I do not have the permissions to do that! Please provide me permissions and try again!**")
 
 @client.command()
 async def botstatus(ctx):
@@ -359,19 +398,24 @@ async def avatar(ctx ,*, member: discord.Member):
     embed.set_image(url=f"{member.avatar_url}")
     await ctx.send(embed=embed)
 
+@avatar.error
+async def avatar_error(ctx , error):
+    if isinstance(error , commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            title="**Correct Use**" ,
+            description="**-avatar [member]**" ,
+            color=discord.Color.blue()
+        )
+        await ctx.send(embed=embed)
+
+    elif isinstance(error, commands.BadArgument):
+        await ctx.send("**Sorry! I was not able to find that user!**")
+
+
 @client.command()
 @has_permissions(administrator=True)
 async def give(ctx,member:discord.Member , karma: int):
     await ctx.send(f"Gave {karma} karma to {member}. They now have {karma} karma!")
-
-@avatar.error
-async def avatar_error(ctx , error):
-    if isinstance(error , commands.MissingRequiredArgument):
-        await ctx.send(f"**{ctx.author.mention}** please mention a member too!")
-
-    elif isinstance(error , commands.BadArgument):
-        await ctx.send("**Sorry! I was not able to find that user!**")
-
 
 @client.command()
 @has_permissions(manage_roles=True)
@@ -393,6 +437,19 @@ async def role_error(ctx , error):
     if isinstance(error , commands.MissingPermissions):
         await ctx.send(f"**{ctx.author.mention}** you need ``Manage Roles`` permission for this command!")
 
+    elif isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+                title="**Correct Use**",
+                description="**-role [member][role]**",
+                color=discord.Color.blue()
+            )
+        await ctx.send(embed=embed)
+
+    elif isinstance(error, commands.CommandInvokeError):
+        await ctx.send("**I do not have the permissions to use this command. Please provide me permissions and try again!**")
+
+    elif isinstance(error, commands.BadArgument):
+            await ctx.send("**Sorry I was not able to find that user!**")
 
 
 @client.command()
@@ -417,6 +474,21 @@ async def removerole_error(ctx , error):
     if isinstance(error , commands.MissingPermissions):
         await ctx.send(f"**{ctx.author.mention}** you need ``Manage Roles`` permission for this command!")
 
+    elif isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+                title="**Correct Use**",
+                description="**-removerole [member][role]**",
+                color=discord.Color.blue()
+            )
+        await ctx.send(embed=embed)
+
+    elif isinstance(error, commands.CommandInvokeError):
+        await ctx.send("**I do not have the permissions to use this command. Please provide me permissions and try again!**")
+
+    elif isinstance(error, commands.BadArgument):
+            await ctx.send("**Sorry I was not able to find that user!**")
+
+
 @client.command()
 @has_permissions(manage_messages=True)
 async def purge(ctx):
@@ -424,10 +496,7 @@ async def purge(ctx):
     await ctx.channel.purge(limit=int(llmit) + 1)
 
 
-@purge.error
-async def purge_error(ctx , error):
-    if isinstance(error , commands.MissingPermissions):
-        await ctx.send(f"**{ctx.author.mention}** you need ``Manage Messages`` permission for this command!")
+
 
 @client.command()
 async def ping(ctx):
@@ -452,10 +521,23 @@ async def mute(ctx,*, member: discord.Member, mute_time: int=None):
 @mute.error
 async def mute_error(ctx , error):
     if isinstance(error , commands.CommandInvokeError):
-        await ctx.send("**Please make a role named as ``Muted`` first!**")
+        await ctx.send("**Please make a role named as ``Muted`` first! or I do not have permissions to use this command! Please give me permissions and try again!**")
 
     elif isinstance(error, commands.MissingPermissions):
         await ctx.send(f"{ctx.author.mention} you need ``Manage Roles`` permission for this command!")
+
+
+    elif isinstance(error , commands.BadArgument):
+        await ctx.send("**Sorry I was not able to find that user!**")
+
+    elif isinstance(error , commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            title = "**Correct Use**" ,
+            description="**-mute [member]**" ,
+            color = discord.Color.blue()
+        )
+    await ctx.send(embed=embed)
+
 
 @client.command()
 @has_permissions(manage_roles=True)
@@ -474,13 +556,25 @@ async def unmute(ctx, *, member: discord.Member):
     await ctx.send(embed=embed)
 
 @unmute.error
-async def unmute_error(ctx , error):
-    if isinstance(error , commands.MissingRequiredArgument):
-        await ctx.send("**Please mention a member to unmute!**")
+async def unmute_error(ctx, error):
+    if isinstance(error, commands.CommandInvokeError):
+        await ctx.send(
+            "**I do not have permissions to use this command! Please give me permissions and try again!**")
 
-    elif isinstance(error , commands.MissingPermissions):
-        await ctx.send(f"{ctx.author.mention} you need ``Manage Roles`` permission to use this command!")
+    elif isinstance(error, commands.MissingPermissions):
+        await ctx.send(f"{ctx.author.mention} you need ``Manage Roles`` permission for this command!")
 
+
+    elif isinstance(error, commands.BadArgument):
+        await ctx.send("**Sorry I was not able to find that user!**")
+
+    elif isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            title="**Correct Use**",
+            description="**-unmute [member]**",
+            color=discord.Color.blue()
+        )
+    await ctx.send(embed=embed)
 
 
 @client.event
