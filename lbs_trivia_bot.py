@@ -27,6 +27,7 @@ async def kick(ctx , member : discord.Member , * , reason=None):
             embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
             await ctx.message.delete()
             await ctx.send(embed=embed)
+
     else:
 
             embed = discord.Embed(title="ModCamp",description=f"**{member.display_name}** has been kicked by **{ctx.author}**!(reason=**{reason}**)",color=discord.Color.blue())
@@ -34,6 +35,7 @@ async def kick(ctx , member : discord.Member , * , reason=None):
             embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
             await ctx.message.delete()
             await ctx.send(embed=embed)
+
 
 
 
@@ -75,7 +77,7 @@ async def unban(ctx , * , member):
 
 
 
-status=cycle(["-help" , "in 13 servers!"])
+status=cycle(["-help" , "in 14 servers!"])
 
 @client.event
 async def on_ready():
@@ -108,6 +110,8 @@ Thanks :slight_smile:''',
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
     embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png", text="Made by Ekamjot#9133")
     await ctx.send(embed=embed)
+
+
 
 @client.command()
 async def guildinfo(ctx):
@@ -174,6 +178,22 @@ async def say(ctx,*,announcement):
     await ctx.message.delete()
     await ctx.send(f'''@everyone 
 {announcement}''')
+
+@say.error
+async def say_error(ctx , error):
+    if isinstance(error , commands.MissingPermissions):
+        await ctx.send(f"**{ctx.author.mention} you do not have the permission required! You need ``Manage Messages`` permission for this command!**")
+
+    elif isinstance(error , commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            title="**Correct Use**" ,
+            description="**-say [announcement]**" ,
+            color=discord.Color.blue()
+        )
+        await ctx.send(embed=embed)
+
+    elif isinstance(error , commands.CommandInvokeError):
+        await ctx.send("**I do not have the permissions to use this command. Please provide me permissions and try again!**")
 
 
 @client.command()
