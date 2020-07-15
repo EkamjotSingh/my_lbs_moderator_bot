@@ -411,6 +411,34 @@ async def avatar_error(ctx , error):
     elif isinstance(error, commands.BadArgument):
         await ctx.send("**Sorry! I was not able to find that user!**")
 
+@client.command()
+async def av(ctx ,*, member: discord.Member):
+    embed = discord.Embed(
+        title = "ModCamp" ,
+        description= f" Showing {member.mention}'s avatar!" ,
+        color = discord.Color.blue()
+    )
+    embed.set_footer(
+        icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",
+        text="Made by Ekamjot#9133")
+
+
+    embed.set_image(url=f"{member.avatar_url}")
+    await ctx.send(embed=embed)
+
+@av.error
+async def av_error(ctx , error):
+    if isinstance(error , commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            title="**Correct Use**" ,
+            description="**-avatar [member]**" ,
+            color=discord.Color.blue()
+        )
+        await ctx.send(embed=embed)
+
+    elif isinstance(error, commands.BadArgument):
+        await ctx.send("**Sorry! I was not able to find that user!**")
+
 
 @client.command()
 @has_permissions(administrator=True)
@@ -537,6 +565,8 @@ async def mute_error(ctx , error):
             color = discord.Color.blue()
         )
     await ctx.send(embed=embed)
+
+
 
 
 @client.command()
