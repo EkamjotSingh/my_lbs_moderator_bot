@@ -9,6 +9,8 @@ from discord import Message
 from itertools import cycle
 
 
+
+
 client = commands.Bot(command_prefix="-")
 
 @client.remove_command("help")
@@ -90,7 +92,7 @@ async def unban_error(ctx , error):
 
 
 
-status=cycle(["-help" , "in 14 servers!"])
+status=cycle(["-help" , "in 18 servers!"])
 
 @client.event
 async def on_ready():
@@ -192,6 +194,15 @@ async def say(ctx,*,announcement):
     await ctx.send(f'''@everyone 
 {announcement}''')
 
+@client.command()
+@has_permissions(administrator=True)
+async def acc(ctx ,*,  time):
+    await ctx.message.delete()
+    await ctx.send(f'''
+<:LastBrainStanding:716103983764078630> **Last Brain Standing starts in just {time} minutes!** 
+
+:white_check_mark:**Connect in <#731844357745016842>  to get access to <#715986102590373959> text channel!  ** ''')
+
 @say.error
 async def say_error(ctx , error):
     if isinstance(error , commands.MissingPermissions):
@@ -212,7 +223,9 @@ async def say_error(ctx , error):
 @client.command()
 async def ready(ctx):
     await ctx.message.delete()
-    await ctx.send("> **ModCamp is connected successfully!** :white_check_mark:")
+
+    read = await ctx.send("> **ModCamp is connected successfully!** :white_check_mark:")
+    await read.add_reaction("✅")
 
 @client.command()
 async def speak(ctx,message):
@@ -431,7 +444,7 @@ async def av_error(ctx , error):
     if isinstance(error , commands.MissingRequiredArgument):
         embed = discord.Embed(
             title="**Correct Use**" ,
-            description="**-avatar [member]**" ,
+            description="**-av [member]**" ,
             color=discord.Color.blue()
         )
         await ctx.send(embed=embed)
