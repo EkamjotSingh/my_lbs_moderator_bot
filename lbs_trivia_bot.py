@@ -269,6 +269,7 @@ async def userinfo_error(ctx , error):
 async def warn(ctx , member: discord.Member ,*, reason):
     user = client.get_user(member.id)
     server = ctx.guild.name
+    await user.send(f"You were warned in {server} for: {reason}")
     embed = discord.Embed(
         title="**ModCamp**",
         description=f"**{member}** was warned! (reason=**{reason}**!)",
