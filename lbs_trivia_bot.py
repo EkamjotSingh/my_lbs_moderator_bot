@@ -92,7 +92,7 @@ async def unban_error(ctx , error):
 
 
 
-status=cycle(["-help" , "in 162 servers!"])
+status=cycle(["-help" , "in 180 servers!"])
 
 @client.event
 async def on_ready():
