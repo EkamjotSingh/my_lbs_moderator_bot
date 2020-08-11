@@ -24,6 +24,7 @@ async def kick(ctx , member : discord.Member , * , reason=None):
     await member.kick(reason=reason)
     if reason==None:
 
+
             embed = discord.Embed(title="ModCamp" , description=f"**{member.display_name}** has been kicked by **{ctx.author}**!(reason=**No reason given!**)"  , color = discord.Color.blue())
             embed.set_footer(icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png" , text="Made by Ekamjot#9133")
             embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png")
@@ -92,7 +93,7 @@ async def unban_error(ctx , error):
 
 
 
-status=cycle(["-help" , "in 360 servers!"])
+status=cycle(["-help" , f"in {len(client.guilds)} servers"])
 
 @client.event
 async def on_ready():
