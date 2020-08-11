@@ -93,7 +93,7 @@ async def unban_error(ctx , error):
 
 
 
-status=cycle(["-help" , "in 401 servers"])
+status=cycle(["-help" , "in 421 servers"])
 
 @client.event
 async def on_ready():
@@ -221,8 +221,8 @@ async def say_error(ctx , error):
         await ctx.send("**I do not have the permissions to use this command. Please provide me permissions and try again!**")
         
 @client.command()
-async def tmembers(ctx):
-    await ctx.send(f"{len(client.users)}")
+async def tmem(ctx):
+    await ctx.send(f"With **{len(client.users)}** users")
 
 
 @client.command()
@@ -640,7 +640,9 @@ async def on_member_join(member):
     embed.set_footer(
         icon_url="https://cdn.discordapp.com/attachments/724157354106421288/727363623898578964/Z.png",
         text="Made by Ekamjot#9133")
-    channel = client.get_channel(id=724157354106421288)
+    server = client.get_guild(724157353632727087)
+    channel = client.get_channel(724157354106421288)
+    
     await channel.send(embed=embed)
 
 
