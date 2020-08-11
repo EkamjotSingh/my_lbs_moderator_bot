@@ -219,6 +219,10 @@ async def say_error(ctx , error):
 
     elif isinstance(error , commands.CommandInvokeError):
         await ctx.send("**I do not have the permissions to use this command. Please provide me permissions and try again!**")
+        
+@client.command()
+async def tmembers(ctx):
+    await ctx.send(f"{len(client.users)}")
 
 
 @client.command()
