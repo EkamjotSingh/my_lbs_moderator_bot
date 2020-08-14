@@ -163,7 +163,6 @@ async def help(ctx):
 
     embed.add_field(name="**-info**", value="To know about the bot", inline=False)
     embed.add_field(name="**-say**" , value="To announce anything with a @everyone ping!(**Can be only used by the person who has ``Manage Messages`` Permission!**)" , inline=False)
-    embed.add_field(name="**-tservers**",value="To know the number of servers that I am in",inline=False)
     embed.add_field(name="**-avatar [member]**", value="To check avatar of other members", inline=False)
     embed.add_field(name="**-users**" , value="To know about the number of members in the server", inline=False)
     embed.add_field(name="**-guildinfo**" , value="To know about the server info!" , inline=False)
@@ -312,7 +311,7 @@ async def warn_error(ctx , error):
 
 
 @client.command()
-async def tservers(ctx):
+async def tdiscord(ctx):
     embed = discord.Embed(
         title="**ModCamp**" ,
         description=f"I am currently in total **{len(client.guilds)}** servers!" ,
