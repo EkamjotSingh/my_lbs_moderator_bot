@@ -495,7 +495,7 @@ async def role_error(ctx , error):
         await ctx.send("**I do not have the permissions to use this command. Please provide me permissions and try again!**")
 
     elif isinstance(error, commands.BadArgument):
-            await ctx.send("**Sorry I was not able to find that user!**")
+            await ctx.send("**Sorry I was not able to find that user or the role!**")
 
 
 @client.command()
