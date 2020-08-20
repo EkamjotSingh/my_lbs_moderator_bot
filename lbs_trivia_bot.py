@@ -492,7 +492,8 @@ async def role_error(ctx , error):
         await ctx.send(embed=embed)
 
     elif isinstance(error, commands.CommandInvokeError):
-        await ctx.send("**I do not have the permissions to use this command. Please provide me permissions and try again!**")
+        await ctx.send('''**I do not have the permissions to use this command. Please provide me permissions and try again!
+**NOTE**:-To assign roles always keep the bot role on top of the role you want to assign!**''')
 
     elif isinstance(error, commands.BadArgument):
             await ctx.send("**Sorry I was not able to find that user or the role!**")
@@ -529,7 +530,8 @@ async def removerole_error(ctx , error):
         await ctx.send(embed=embed)
 
     elif isinstance(error, commands.CommandInvokeError):
-        await ctx.send("**I do not have the permissions to use this command. Please provide me permissions and try again!**")
+        await ctx.send('''**I do not have the permissions to use this command. Please provide me permissions and try again!**
+**NOTE**:-To remove roles always keep the bot role on top of the role you want to remove!''')
 
     elif isinstance(error, commands.BadArgument):
             await ctx.send("**Sorry I was not able to find that user!**")
