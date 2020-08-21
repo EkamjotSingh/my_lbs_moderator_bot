@@ -704,7 +704,13 @@ async def purge_error(ctx, error):
     if isinstance(error, commands.CommandInvokeError):
         await ctx.send(
             '''**I do not have permissions to use this command! Please give me permissions and try again!**
-**NOTE:-** Giving me ``Administrator`` permission might fix the issue!''')
+**NOTE:-** Giving me ``Administrator`` permission might fix the issue!
+
+**Correct Use:-**
+-purge [number of messages]
+Examples:-
+-purge 10 
+-purge 50''')
 
     elif isinstance(error, commands.MissingPermissions):
         await ctx.send(f"{ctx.author.mention} you need ``Manage Messages`` permission for this command!")
@@ -720,7 +726,7 @@ Please write the number of messages to purge in numbers.
     elif isinstance(error, commands.MissingRequiredArgument):
         embed = discord.Embed(
             title="**Correct Use**",
-            description="**-unmute [member]**",
+            description="**-purge [number of messages]**",
             color=discord.Color.blue()
         )
     await ctx.send(embed=embed)
