@@ -690,7 +690,7 @@ async def removerole_error(ctx, error):
 Giving me ``Administrator`` permission might fix the issue!''')
 
     elif isinstance(error, commands.BadArgument):
-        await ctx.send("**Sorry I was not able to find that user!**")
+        await ctx.send("**Sorry I was not able to find that user or the role!**")
 
 
 @client.command()
