@@ -165,7 +165,7 @@ async def guildinfo(ctx):
     await ctx.send(embed=embed)
 
 @client.command()
-async def report(ctx,*,message):
+async def report(ctx,*,message: str):
     name = ctx.author
     user_id = ctx.author.id
     server = ctx.guild.name
