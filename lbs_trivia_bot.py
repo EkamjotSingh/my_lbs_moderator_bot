@@ -341,8 +341,6 @@ async def help(ctx):
                     value="To announce anything with a @everyone ping!(**Can be only used by the person who has ``Manage Messages`` Permission!**)",
                     inline=False)
     embed.add_field(name="**-avatar [member]**", value="To check avatar of other members", inline=False)
-    embed.add_field(name="**-report**" , value="To report an error/bug!" , inline=False)
-    embed.add_field(name="**-suggest**" , value="To give a suggestion!" , inline=False)
     embed.add_field(name="**-users**", value="To know about the number of members in the server", inline=False)
     embed.add_field(name="**-guildinfo**", value="To know about the server info!", inline=False)
     embed.add_field(name="**-botstatus**", value="To check the bot status", inline=False)
@@ -382,6 +380,8 @@ async def help(ctx):
     embed.add_field(name="**-warn [member] [reason]**",
                     value="To warn a person!(**Can be only used by the person who has ``Ban Members`` permission!**)",
                     inline=False)
+     embed.add_field(name="**-report**" , value="To report an error/bug!" , inline=False)
+    embed.add_field(name="**-suggest**" , value="To give a suggestion!" , inline=False)
     embed.add_field(name="**-invite**", value="To invite me to your server", inline=False)
     embed.set_thumbnail(
         url="https://cdn.discordapp.com/avatars/724158223401091153/c3bea140522f580cd678080274c7d5ba.webp?size=1024")
