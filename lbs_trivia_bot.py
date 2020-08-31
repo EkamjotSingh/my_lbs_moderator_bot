@@ -171,14 +171,16 @@ async def report(ctx,*,message: str):
     server = ctx.guild.name
     server_id = ctx.guild.id
     myself = client.get_user(457044079994470402)
+    await ctx.send('**Your report about a bug/error has successfully reached to us and we will surely try to fix it** :slight_smile:')
     await myself.send(f'''
 **Report**
 By:- {name}
 User ID:- {user_id}
 Server:- {server}
 Server ID:- {server_id}
-Message:- {message}''')
-    await ctx.send('**Your report about a bug/error has successfully reached to us and we will surely try to fix it** :slight_smile:')
+Message:- {message}
+-----------------------------''')
+    
     
 @report.error
 async def report_error(ctx, error):
@@ -204,15 +206,16 @@ async def suggest(ctx,*,message):
     server = ctx.guild.name
     server_id = ctx.guild.id
     myself = client.get_user(457044079994470402)
+    await ctx.send('**Your suggestion has successfully reached to us. Thanks for your suggestion!** :slight_smile:')
     await myself.send(f'''
 **Suggestion**
 By:- {name}
 User ID:- {user_id}
 Server:- {server}
 Server ID:- {server_id}
-Message:- {message}''')
-    await ctx.send('**Your suggestion has successfully reached to us. Thanks for your suggestion!** :slight_smile:')
-
+Message:- {message}
+---------------------------''')
+    
 
 @suggest.error
 async def suggest_error(ctx, error):
