@@ -181,55 +181,6 @@ Message:- {message}''')
     await ctx.send('**Your report about a bug/error has successfully reached to us and we will surely try to fix it** :slight_smile:')
 
 
-@report.error
-async def report_error(ctx, error):
-    if isinstance(error, commands.MissingRequiredArgument):
-        embed = discord.Embed(
-            title="**Correct Use**",
-            description="**-report [error/bug/message]**",
-            color=discord.Color.blue()
-        )
-        await ctx.send(embed=embed)
-
-
-
-    elif isinstance(error, commands.BadArgument):
-        await ctx.send(
-            "**Sorry I was not able to get your message to the developer writing words in the starting of the suggestion instead of numbers might help**")
-
-
-@client.command()
-async def suggest(ctx,*,message):
-    name = ctx.author
-    user_id = ctx.author.id
-    server = ctx.guild.name
-    server_id = ctx.guild.id
-    myself = 457044079994470402
-    await myself.send(f'''
-**Suggestion**
-By:- {name}
-User ID:- {user_id}
-Server:- {server}
-Server ID:- {server_id}
-Message:- {message}''')
-    await ctx.send('**Your suggestion has successfully reached to us. Thanks for your suggestion!** :slight_smile:')
-
-
-@suggest.error
-async def suggest_error(ctx, error):
-    
-    if isinstance(error, commands.MissingRequiredArgument):
-        embed = discord.Embed(
-            title="**Correct Use**",
-            description="**-suggest [suggestion/message]**",
-            color=discord.Color.blue()
-        )
-        await ctx.send(embed=embed)
-
-  
-
-    elif isinstance(error, commands.BadArgument):
-        await ctx.send("**Sorry I was not able to get your message to the developer writing words in the starting of the suggestion instead of numbers might help**")
 
 
 @client.command()
