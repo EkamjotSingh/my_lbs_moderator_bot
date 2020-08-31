@@ -165,6 +165,74 @@ async def guildinfo(ctx):
     await ctx.send(embed=embed)
 
 @client.command()
+async def report(ctx,*,message):
+    name = ctx.author
+    user_id = ctx.author.id
+    server = ctx.guild.name
+    server_id = ctx.guild.id
+    myself = 457044079994470402
+    await myself.send(f'''
+**Report**
+By:- {name}
+User ID:- {user_id}
+Server:- {server}
+Server ID:- {server_id}
+Message:- {message}''')
+    await ctx.send('**Your report about a bug/error has successfully reached to us and we will surely try to fix it** :slight_smile:')
+
+
+@report.error
+async def report_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            title="**Correct Use**",
+            description="**-report [error/bug/message]**",
+            color=discord.Color.blue()
+        )
+        await ctx.send(embed=embed)
+
+
+
+    elif isinstance(error, commands.BadArgument):
+        await ctx.send(
+            "**Sorry I was not able to get your message to the developer writing words in the starting of the suggestion instead of numbers might help**")
+
+
+@client.command()
+async def suggest(ctx,*,message):
+    name = ctx.author
+    user_id = ctx.author.id
+    server = ctx.guild.name
+    server_id = ctx.guild.id
+    myself = 457044079994470402
+    await myself.send(f'''
+**Suggestion**
+By:- {name}
+User ID:- {user_id}
+Server:- {server}
+Server ID:- {server_id}
+Message:- {message}''')
+    await ctx.send('**Your suggestion has successfully reached to us. Thanks for your suggestion!** :slight_smile:')
+
+
+@suggest.error
+async def suggest_error(ctx, error):
+    
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            title="**Correct Use**",
+            description="**-suggest [suggestion/message]**",
+            color=discord.Color.blue()
+        )
+        await ctx.send(embed=embed)
+
+  
+
+    elif isinstance(error, commands.BadArgument):
+        await ctx.send("**Sorry I was not able to get your message to the developer writing words in the starting of the suggestion instead of numbers might help**")
+
+
+@client.command()
 @has_permissions(manage_roles=True)
 async def roleall(ctx , role: discord.Role):
     embed = discord.Embed(
@@ -270,6 +338,8 @@ async def help(ctx):
                     value="To announce anything with a @everyone ping!(**Can be only used by the person who has ``Manage Messages`` Permission!**)",
                     inline=False)
     embed.add_field(name="**-avatar [member]**", value="To check avatar of other members", inline=False)
+    embed.add_field(name="**-report**" , value="To report an error/bug!" , inline=False)
+    embed.add_field(name="**-suggest**" , value="To give a suggestion!" , inline=False)
     embed.add_field(name="**-users**", value="To know about the number of members in the server", inline=False)
     embed.add_field(name="**-guildinfo**", value="To know about the server info!", inline=False)
     embed.add_field(name="**-botstatus**", value="To check the bot status", inline=False)
@@ -690,7 +760,7 @@ async def removerole_error(ctx, error):
 Giving me ``Administrator`` permission might fix the issue!''')
 
     elif isinstance(error, commands.BadArgument):
-        await ctx.send("**Sorry I was not able to find that user or the role!**")
+        await ctx.send("**Sorry I was not able to find that user!**")
 
 
 @client.command()
@@ -704,13 +774,7 @@ async def purge_error(ctx, error):
     if isinstance(error, commands.CommandInvokeError):
         await ctx.send(
             '''**I do not have permissions to use this command! Please give me permissions and try again!**
-**NOTE:-** Giving me ``Administrator`` permission might fix the issue!
-
-**Correct Use:-**
--purge [number of messages]
-Examples:-
--purge 10 
--purge 50''')
+**NOTE:-** Giving me ``Administrator`` permission might fix the issue!''')
 
     elif isinstance(error, commands.MissingPermissions):
         await ctx.send(f"{ctx.author.mention} you need ``Manage Messages`` permission for this command!")
@@ -726,7 +790,7 @@ Please write the number of messages to purge in numbers.
     elif isinstance(error, commands.MissingRequiredArgument):
         embed = discord.Embed(
             title="**Correct Use**",
-            description="**-purge [number of messages]**",
+            description="**-unmute [member]**",
             color=discord.Color.blue()
         )
     await ctx.send(embed=embed)
