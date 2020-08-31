@@ -170,7 +170,7 @@ async def report(ctx,*,message: str):
     user_id = ctx.author.id
     server = ctx.guild.name
     server_id = ctx.guild.id
-    myself = 457044079994470402
+    myself = client.get_user(457044079994470402)
     await myself.send(f'''
 **Report**
 By:- {name}
