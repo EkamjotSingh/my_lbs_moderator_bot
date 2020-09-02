@@ -5,6 +5,7 @@ from discord.ext.commands import has_permissions
 from discord import member
 from discord.ext.commands import Bot
 import random
+import os
 from discord import Message
 from itertools import cycle
 
