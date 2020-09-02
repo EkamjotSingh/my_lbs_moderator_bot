@@ -404,12 +404,11 @@ async def say(ctx, *, announcement):
 
 @client.command()
 async def closesocket(ctx):
-    await client.close()
-    
+    await client.logout()
     
 @client.command()
 async def startsocket(ctx):
-    await client.start()
+    await client.connect(*, reconnect=True)
     
 
 
