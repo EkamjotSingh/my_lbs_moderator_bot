@@ -404,7 +404,13 @@ async def say(ctx, *, announcement):
 
 @client.command()
 async def closesocket(ctx):
-    await client.logout()
+    try:
+        await client.logout()
+    except:
+        pass
+    finally:
+        os.system("python lbs_trivia_bot.py")
+   
     
 @client.command()
 async def startsocket(ctx):
