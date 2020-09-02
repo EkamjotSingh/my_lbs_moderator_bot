@@ -408,7 +408,7 @@ async def closesocket(ctx):
     
 @client.command()
 async def startsocket(ctx):
-    await client.connect(*, reconnect=True)
+    await client.connect(reconnect=True)
     
 
 
