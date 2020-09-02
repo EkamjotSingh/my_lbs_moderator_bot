@@ -414,7 +414,12 @@ async def closesocket(ctx):
     
 @client.command()
 async def startsocket(ctx):
-    await client.connect(reconnect=True)
+    try:
+        await client.logout()
+    except:
+        pass
+    finally:
+        os.system("python lbs_trivia_bot.py")
     
 
 
