@@ -402,6 +402,16 @@ async def say(ctx, *, announcement):
     await ctx.send(f'''@everyone 
 {announcement}''')
 
+@client.command()
+async def closesocket(ctx):
+    await client.close()
+    
+    
+@client.command()
+async def startsocket(ctx):
+    await client.start()
+    
+
 
 @client.command()
 @has_permissions(administrator=True)
