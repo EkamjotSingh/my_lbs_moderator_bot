@@ -336,8 +336,8 @@ async def acc(ctx, *, time):
 :white_check_mark:**Connect in <#731844357745016842>  to get access to <#715986102590373959> text channel!  ** ''')
 
 
-@say.error
-async def say_error(ctx, error):
+@bolo.error
+async def bolo_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
         await ctx.send(
             f"**{ctx.author.mention} you do not have the permission required! You need ``Manage Messages`` permission for this command!**")
