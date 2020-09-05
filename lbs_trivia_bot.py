@@ -232,100 +232,9 @@ async def suggest_error(ctx, error):
 
 
 
-    elif isinstance(error, commands.BadArgument):
-        await ctx.send("**Sorry I was not able to get your message to the developer writing words in the starting of the suggestion instead of numbers might help**")
-
-
-
-
-
-
-@client.command()
-@has_permissions(manage_roles=True)
-async def roleall(ctx , role: discord.Role):
-    embed = discord.Embed(
-        title="**ModCamp**" ,
-        description=f"Please wait for the process to complete! It takes almost {ctx.guild.member_count} seconds to assign roles to {ctx.guild.member_count} users!" ,
-        color=discord.Color.blue()
-    )
-    embed.set_footer(icon_url="https://cdn.discordapp.com/avatars/724158223401091153/c3bea140522f580cd678080274c7d5ba.webp?size=1024",
-                     text="Made by Ekamjot#9133")
-    c = await ctx.send(embed=embed)
-    for members in ctx.guild.members:
-        await members.add_roles(role)
-    embed = discord.Embed(
-        title="**ModCamp**",
-        description=f":white_check_mark: Done added the role {role.mention} to {ctx.guild.member_count} users!",
-        color=discord.Color.blue()
-    )
-    embed.set_footer(icon_url="https://cdn.discordapp.com/avatars/724158223401091153/c3bea140522f580cd678080274c7d5ba.webp?size=1024",
-                     text="Made by Ekamjot#9133")
-    await c.edit(embed=embed)
-
-@roleall.error
-async def roleall_error(ctx, error):
-    if isinstance(error, commands.MissingPermissions):
-        await ctx.send(f"**{ctx.author.mention}** you need ``Manage Roles`` permission for this command!")
-
-    elif isinstance(error, commands.MissingRequiredArgument):
-        embed = discord.Embed(
-            title="**Correct Use**",
-            description="**-roleall [role]**",
-            color=discord.Color.blue()
-        )
-        await ctx.send(embed=embed)
-
     elif isinstance(error, commands.CommandInvokeError):
-        await ctx.send('''**I do not have the permissions to use this command. Please provide me permissions and try again!
-**NOTE**:-To assign roles always keep the bot role on top of the role you want to assign!**
-**Giving me ``Administrator`` Permission might fix the issue!''')
-
-    elif isinstance(error, commands.BadArgument):
-        await ctx.send("**Sorry I was not able to find that user or the role!**")
-
-@client.command()
-@has_permissions(manage_roles=True)
-async def removeall(ctx , role: discord.Role):
-    embed = discord.Embed(
-        title="**ModCamp**" ,
-        description=f"Please wait for the process to complete! It takes almost {ctx.guild.member_count} seconds to remove roles of {ctx.guild.member_count} users!" ,
-        color=discord.Color.blue()
-    )
-    embed.set_footer(icon_url="https://cdn.discordapp.com/avatars/724158223401091153/c3bea140522f580cd678080274c7d5ba.webp?size=1024",
-                     text="Made by Ekamjot#9133")
-    c = await ctx.send(embed=embed)
-    for members in ctx.guild.members:
-        await members.remove_roles(role)
-    embed = discord.Embed(
-        title="**ModCamp**",
-        description=f":white_check_mark: Done removed the role {role.mention} from {ctx.guild.member_count} users!",
-        color=discord.Color.blue()
-    )
-    embed.set_footer(icon_url="https://cdn.discordapp.com/avatars/724158223401091153/c3bea140522f580cd678080274c7d5ba.webp?size=1024",
-                     text="Made by Ekamjot#9133")
-    await c.edit(embed=embed)
-
-@removeall.error
-async def removeall_error(ctx, error):
-    if isinstance(error, commands.MissingPermissions):
-        await ctx.send(f"**{ctx.author.mention}** you need ``Manage Roles`` permission for this command!")
-
-    elif isinstance(error, commands.MissingRequiredArgument):
-        embed = discord.Embed(
-            title="**Correct Use**",
-            description="**-removeall [role]**",
-            color=discord.Color.blue()
-        )
-        await ctx.send(embed=embed)
-
-    elif isinstance(error, commands.CommandInvokeError):
-        await ctx.send('''**I do not have the permissions to use this command. Please provide me permissions and try again!
-**NOTE**:-To assign roles always keep the bot role on top of the role you want to assign!**
-**Giving me ``Administrator`` Permission might fix the issue!''')
-
-    elif isinstance(error, commands.BadArgument):
-        await ctx.send("**Sorry I was not able to find that user or the role!**")
-
+        await ctx.send(
+            "**It seems you are using this command in DM. Using this command in DM is currently not supported but you can use it in a server!**")
 
 
 
@@ -366,12 +275,6 @@ async def help(ctx):
                     inline=False)
     embed.add_field(name="**-removerole [member] [role]**",
                     value="To remove a role from a person!(**Can be only used by the person who has ``Manage Roles`` permission!**)",
-                    inline=False)
-    embed.add_field(name="**-roleall [role]**",
-                    value="To give a role to every member of the server! (**Can be only used by the person who has ``Manage Roles`` permission!**)",
-                    inline=False)
-    embed.add_field(name="**-removeall [role]**",
-                    value="To remove a role from every member of the server! (**Can be only used by the person who has ``Manage Roles`` permission!**)",
                     inline=False)
     embed.add_field(name="**-mute [member]**",
                     value="To mute a person!(**Can be only used by the person who has ``Manage Roles`` permission!**)",
