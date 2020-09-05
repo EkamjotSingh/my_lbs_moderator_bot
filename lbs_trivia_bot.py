@@ -164,6 +164,16 @@ async def guildinfo(ctx):
     embed.set_footer(icon_url="https://cdn.discordapp.com/avatars/724158223401091153/c3bea140522f580cd678080274c7d5ba.webp?size=1024",
                      text="Made by Ekamjot#9133")
     await ctx.send(embed=embed)
+    
+
+    
+@guildinfo.error
+async def guildinfo_error(ctx, error):
+    if isinstance(error, commands.CommandInvokeError):
+        await ctx.send(
+            "**It seems you are using this command in DM. Using this command in DM is currently not supported but you can use it in a server!**")
+
+
 
 @client.command()
 async def report(ctx,*,message: str):
@@ -251,9 +261,6 @@ async def help(ctx):
     )
 
     embed.add_field(name="**-info**", value="To know about the bot", inline=False)
-    embed.add_field(name="**-say**",
-                    value="To announce anything with a @everyone ping!(**Can be only used by the person who has ``Manage Messages`` Permission!**)",
-                    inline=False)
     embed.add_field(name="**-avatar [member]**", value="To check avatar of other members", inline=False)
     embed.add_field(name="**-users**", value="To know about the number of members in the server", inline=False)
     embed.add_field(name="**-guildinfo**", value="To know about the server info!", inline=False)
@@ -302,7 +309,7 @@ async def help(ctx):
 
 @client.command()
 @has_permissions(manage_messages=True)
-async def say(ctx, *, announcement):
+async def bolo(ctx, *, announcement):
     await ctx.message.delete()
     await ctx.send(f'''@everyone 
 {announcement}''')
