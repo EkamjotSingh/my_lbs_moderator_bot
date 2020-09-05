@@ -183,6 +183,24 @@ Message:- {message}
 -----------------------------''')
     
 
+    
+@report.error
+async def report_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            title="**Correct Use**",
+            description="**-report [error/bug/message]**",
+            color=discord.Color.blue()
+        )
+        await ctx.send(embed=embed)
+
+
+
+    elif isinstance(error, commands.CommandInvokeError):
+        await ctx.send(
+            "**It seems you are using this command in DM. Using this command in DM is currently not supported but you can use it in a server!**")
+
+
 @client.command()
 async def suggest(ctx,*,message):
     name = ctx.author
