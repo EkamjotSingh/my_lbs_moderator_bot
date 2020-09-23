@@ -27,7 +27,7 @@ async def kick(ctx, member: discord.Member, *, reason=None):
                               description=f"**{member.display_name}** has been kicked by **{ctx.author}**!(reason=**No reason given!**)",
                               color=discord.Color.blue())
         embed.set_footer(icon_url="https://cdn.discordapp.com/avatars/724158223401091153/c3bea140522f580cd678080274c7d5ba.webp?size=1024",
-                         text="Made by Ekamjot#9133")
+                         text="Made by Ekamjot#2888")
         embed.set_thumbnail(url="https://cdn.discordapp.com/avatars/724158223401091153/c3bea140522f580cd678080274c7d5ba.webp?size=1024")
         await ctx.message.delete()
         await ctx.send(embed=embed)
@@ -38,7 +38,7 @@ async def kick(ctx, member: discord.Member, *, reason=None):
                               description=f"**{member.display_name}** has been kicked by **{ctx.author}**!(reason=**{reason}**)",
                               color=discord.Color.blue())
         embed.set_footer(icon_url="https://cdn.discordapp.com/avatars/724158223401091153/c3bea140522f580cd678080274c7d5ba.webp?size=1024",
-                         text="Made by Ekamjot#9133")
+                         text="Made by Ekamjot#2888")
         embed.set_thumbnail(url="https://cdn.discordapp.com/avatars/724158223401091153/c3bea140522f580cd678080274c7d5ba.webp?size=1024")
         await ctx.message.delete()
         await ctx.send(embed=embed)
@@ -58,7 +58,7 @@ async def ban(ctx, member: discord.Member, *, reason=None):
                               description=f"**{member.display_name}** has been banned by **{ctx.author}**! (reason=**No reason given!**",
                               color=discord.Color.blue())
         embed.set_footer(icon_url="https://cdn.discordapp.com/avatars/724158223401091153/c3bea140522f580cd678080274c7d5ba.webp?size=1024",
-                         text="Made by Ekamjot#9133")
+                         text="Made by Ekamjot#2888")
         embed.set_thumbnail(url="https://cdn.discordapp.com/avatars/724158223401091153/c3bea140522f580cd678080274c7d5ba.webp?size=1024")
         await ctx.message.delete()
         await ctx.send(embed=embed)
@@ -68,7 +68,7 @@ async def ban(ctx, member: discord.Member, *, reason=None):
                               description=f"**{member.display_name}** was banned by **{ctx.author}**! (reason=**{reason}**)",
                               color=discord.Color.blue())
         embed.set_footer(icon_url="https://cdn.discordapp.com/avatars/724158223401091153/c3bea140522f580cd678080274c7d5ba.webp?size=1024",
-                         text="Made by Ekamjot#9133")
+                         text="Made by Ekamjot#2888")
         embed.set_thumbnail(url="https://cdn.discordapp.com/avatars/724158223401091153/c3bea140522f580cd678080274c7d5ba.webp?size=1024")
         await ctx.message.delete()
         await ctx.send(embed=embed)
@@ -78,14 +78,14 @@ async def ban(ctx, member: discord.Member, *, reason=None):
 @has_permissions(ban_members=True)
 async def unban(ctx, *, member):
     banned_users = await ctx.guild.bans()
-    member_name, member_discriminator = member.split("#")
+    member_id = ctx.member.id
 
     for ban_entry in banned_users:
         user = ban_entry.user
-        if (user.name, user.discriminator) == (member_name, member_discriminator):
+        if user.id == member_id:
             await ctx.guild.unban(user)
             await ctx.message.delete()
-            await ctx.send(f"**{user.name, user.discriminator}** was unbanned!")
+            await ctx.send(f"**{user}** was unbanned!")
 
 
 @unban.error
